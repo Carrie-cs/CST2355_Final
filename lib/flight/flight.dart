@@ -4,11 +4,11 @@ import 'package:floor/floor.dart';
 class Flight {
 
   @primaryKey
-  final String flightId;
-  final String departureCity;
-  final String destinationCity;
-  final String departureTime;
-  final String arrivalTime;
+  String flightId;
+  String departureCity;
+  String destinationCity;
+  String departureTime;
+  String arrivalTime;
 
   Flight(this.flightId,
          this.departureCity,
