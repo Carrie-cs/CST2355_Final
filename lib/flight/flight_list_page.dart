@@ -1,3 +1,4 @@
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 import 'flight.dart';
@@ -40,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _controller3;
   late TextEditingController _controller4;
   late TextEditingController _controller5;
+  late EncryptedSharedPreferences flightPrefs;
   var flightList = <Flight>[];
   late FlightDao flightDao;
   Flight? selectedFlight;
@@ -54,9 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller3 = TextEditingController();
     _controller4 = TextEditingController();
     _controller5 = TextEditingController();
+    _initEncryptedSharedPreferences();
     _initializeDatabase();
   }
 
+  //Method to initialize EncryptedSharedPreferences
+  Future<void> _initEncryptedSharedPreferences()  async {
+    flightPrefs = EncryptedSharedPreferences();
+  }
+
+  // Method to initialize database and retrieve data from database
   Future<void> _initializeDatabase() async {
     // Initialize database object
     final database = await $FloorFlightDatabase.databaseBuilder('flight_database.db').build();
@@ -77,6 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller4.dispose();
     _controller5.dispose();
     super.dispose();
+  }
+
+  // Method to save data to EncryptedSharedPreferences object
+  Future<void> _saveFlightToPreferences(Flight flight) async {
+    await flightPrefs.setString('Id_${flight.flightId}', flight.flightId);
+    await flightPrefs.setString('Dep_${flight.flightId}', flight.departureCity);
+    await flightPrefs.setString('Dest_${flight.flightId}', flight.destinationCity);
+    await flightPrefs.setString('ETD_${flight.flightId}', flight.departureTime);
+    await flightPrefs.setString('ETA_${flight.flightId}', flight.arrivalTime);
   }
 
   // This function returns the flight list widget
@@ -238,33 +256,71 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: const Text("Submit"),
                                 onPressed: () {
                                   if (_controller1.value.text != "" && _controller2.value.text != "" && _controller3.value.text != "" && _controller4.value.text != "" && _controller5.value.text != "") {
-                                    setState(() {
-                                      var newFlightId = _controller1.value.text;
-                                      var newDepartureCity = _controller2.value.text;
-                                      var newDestinationCity = _controller3.value.text;
-                                      var newDepartureTime = _controller4.value.text;
-                                      var newArrivalTime = _controller5.value.text;
-                                      var flight = Flight(newFlightId, newDepartureCity, newDestinationCity, newDepartureTime, newArrivalTime);
-                                      flightList.add(flight);
-                                      flightDao.addFlight(flight);
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) => AlertDialog(
+                                      title: const Text('Please Confirm'),
+                                      content: const Text('Are you sure you want to add this flight?', style: TextStyle(fontSize: 18)),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: (){
+                                            setState(() {
+                                              var newFlightId = _controller1.value.text;
+                                              var newDepartureCity = _controller2.value.text;
+                                              var newDestinationCity = _controller3.value.text;
+                                              var newDepartureTime = _controller4.value.text;
+                                              var newArrivalTime = _controller5.value.text;
+                                              var flight = Flight(newFlightId, newDepartureCity, newDestinationCity, newDepartureTime, newArrivalTime);
 
-                                      _controller1.clear();
-                                      _controller2.clear();
-                                      _controller3.clear();
-                                      _controller4.clear();
-                                      _controller5.clear();
+                                              // Save new flight to database
+                                              flightDao.addFlight(flight);
 
-                                      isCreatingFlight = false;
-                                    });
-                                  } else {
-                                    var snackBar = SnackBar(
-                                        content: const Text("Please fill in all fields!"),
-                                        duration: const Duration(seconds: 10),
-                                        action: SnackBarAction(label: "OK", onPressed: () {})
+                                              // Save new flight to EncryptedSharedPreferences
+                                              _saveFlightToPreferences(flight);
+
+                                              // Save new flight to ListView
+                                              flightList.add(flight);
+
+                                              _controller1.clear();
+                                              _controller2.clear();
+                                              _controller3.clear();
+                                              _controller4.clear();
+                                              _controller5.clear();
+
+                                              isCreatingFlight = false;
+                                            });
+                                            // Show SnackBar to inform user the new flight was added successfully
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text("Flight successfully added!"),
+                                              duration: Duration(seconds: 5),
+                                            ));
+                                            Navigator.pop(context);
+                                          },
+                                            child: const Text("YES")
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isCreatingFlight = false;
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("NO")
+                                        )
+                                      ]
+                                    )
+                                  );}
+                                  else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: const Text("Please fill in all fields!"),
+                                          duration: const Duration(seconds: 10),
+                                          action: SnackBarAction(label: "OK", onPressed: () {})
+                                      ),
                                     );
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                   }
-                                }
+                                },
                             ),
                             FilledButton(
                                 child: const Text("Cancel"),
@@ -273,7 +329,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     isCreatingFlight = false;
                                   });
                                 }
-                            )
+                            ),
                           ]
                       )
                   )
@@ -444,40 +500,125 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     // The update button to update the information of the selected flight
                     FilledButton(
-                      onPressed: () {
-                        setState(() {
-                          // Update the selected flight attributes with the new values
-                          selectedFlight!.flightId = _controller1.text;
-                          selectedFlight!.departureCity = _controller2.text;
-                          selectedFlight!.destinationCity = _controller3.text;
-                          selectedFlight!.departureTime = _controller4.text;
-                          selectedFlight!.arrivalTime = _controller5.text;
-
-                          // Update the flight in the database
-                          flightDao.updateFlight(selectedFlight!);
-
-                          // Find the index of the flight in the flightList and update it
-                          int index = flightList.indexWhere((flight) => flight.flightId == selectedFlight!.flightId);
-                          if (index != -1) {
-                            flightList[index] = selectedFlight!;
-                          }
-                        });
-                      },
                       child: const Text("Update Flight"),
+                      onPressed: () {
+                        // Store the origin values in text fields
+                        String originalFlightId = selectedFlight!.flightId;
+                        String originalDepartureCity = selectedFlight!.departureCity;
+                        String originalDestinationCity = selectedFlight!.destinationCity;
+                        String originalDepartureTime = selectedFlight!.departureTime;
+                        String originalArrivalTime = selectedFlight!.arrivalTime;
+
+                        // Store the updated values in text fields
+                        String newFlightId = _controller1.text;
+                        String newDepartureCity = _controller2.text;
+                        String newDestinationCity = _controller3.text;
+                        String newDepartureTime = _controller4.text;
+                        String newArrivalTime = _controller5.text;
+
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Please Confirm'),
+                                content: const Text('Are you sure you want to update this flight?', style: TextStyle(fontSize: 18)),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text("Yes"),
+                                    onPressed: (){
+                                      setState(() {
+                                        // Update the selected flight attributes with the new values
+                                        selectedFlight!.flightId = newFlightId;
+                                        selectedFlight!.departureCity = newDepartureCity;
+                                        selectedFlight!.destinationCity = newDestinationCity;
+                                        selectedFlight!.departureTime = newDepartureTime;
+                                        selectedFlight!.arrivalTime = newArrivalTime;
+
+                                        // Update the flight in the database
+                                        flightDao.updateFlight(selectedFlight!);
+
+                                        // Update the flight in the EncryptedSharedPreferences
+                                        _saveFlightToPreferences(selectedFlight!);
+
+                                        // Update the flight in the ListView
+                                        int index = flightList.indexWhere((flight) => flight.flightId == selectedFlight!.flightId);
+                                        if (index != -1) {
+                                        flightList[index] = selectedFlight!;
+                                        }
+                                      });
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                        content: Text("Flight successfully updated!"),
+                                        duration: Duration(seconds: 5),),
+                                      );
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text("No"),
+                                    onPressed: (){
+                                      setState(() {
+                                        // Display the origin values in text fields
+                                        _controller1.text = originalFlightId;
+                                        _controller2.text = originalDepartureCity;
+                                        _controller3.text = originalDestinationCity;
+                                        _controller4.text = originalDepartureTime;
+                                        _controller5.text = originalArrivalTime;
+                                      });
+                                      Navigator.pop(context);
+                                    },
+                                  )
+                                ]
+                            )
+                        );
+                      },
                     ),
                     // The delete button to remove the selected flight
                     FilledButton(
-                      onPressed: () {
-                        setState(() {
-                          // Remove the selected flight from database
-                          flightDao.deleteFlight(selectedFlight!);
-                          // Remove the selected flight from ListView
-                          flightList.removeWhere((flight) => flight.flightId == selectedFlight!.flightId);
-                          // Reset the selectedFlight to null
-                          selectedFlight = null;
-                        });
-                      },
-                      child: const Text("Delete Flight"),
+                        child: const Text("Delete Flight"),
+                        onPressed: () {
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Please Confirm'),
+                                content: const Text('Are you sure you want to delete this flight?', style: TextStyle(fontSize: 18)),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text("Yes"),
+                                    onPressed: (){
+                                      setState(() {
+                                        // Remove the selected flight from database
+                                        flightDao.deleteFlight(selectedFlight!);
+
+                                        // Remove the selected flight from EncryptedSharedPreferences
+                                        flightPrefs.remove('Id_${selectedFlight!.flightId}');
+                                        flightPrefs.remove('Dep_${selectedFlight!.flightId}');
+                                        flightPrefs.remove('Dest_${selectedFlight!.flightId}');
+                                        flightPrefs.remove('ETD_${selectedFlight!.flightId}');
+                                        flightPrefs.remove('ETA_${selectedFlight!.flightId}');
+
+                                        // Remove the selected flight from ListView
+                                        flightList.removeWhere((flight) => flight.flightId == selectedFlight!.flightId);
+                                        // Reset the selectedFlight to null
+                                        selectedFlight = null;
+                                      });
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Flight has been deleted"),
+                                          duration: Duration(seconds: 5),
+                                        ),
+                                      );
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text("No"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }
+                                  )
+                                ]
+                            )
+                        );}
                     ),
                   ],
                 ),
@@ -530,14 +671,64 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           actions: [
             Padding(
-                padding: const EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 5),
                 child:
-                OutlinedButton(onPressed: () {
+                TextButton(onPressed: () {
                   setState(() {
                     selectedFlight = null;
                   });
-                }, child: const Text("Back"))
-            )
+                  },
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 16),
+                      foregroundColor: Colors.indigo,
+                    ),
+                    child: const Text("Back"))
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: PopupMenuButton<String>(
+                onSelected: (String value) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Instruction"),
+                        content: Text(value),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Got it"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                itemBuilder: (BuildContext context) {
+                  return [
+                    const PopupMenuItem<String>(
+                      value: 'Click the "Add Flight" button, fill in all the fields and click "Submit". Then click "Yes" to confirm adding the flight, or "No" to cancel.',
+                      child: Text('How to add a flight?'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'Simply click on the flight you want to view in the list, it will go to the details page automatically.',
+                      child: Text('How to view flight details?'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'Go to the details page of the flight you want to update. Fill in the information and click "Update Flight", then click "Yes" to confirm the update, or "No" to cancel.',
+                      child: Text('How to update a flight?'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: 'Go to the details page of the flight you want to delete. Click "Delete Flight", then click "Yes" to confirm the deletion, or "No" to cancel.',
+                      child: Text('How to delete a flight?'),
+                    ),
+                  ];
+                },
+                child: const Text("Help", style: TextStyle(fontSize: 16, color: Colors.indigo),),
+              ),
+            ),
           ],
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
