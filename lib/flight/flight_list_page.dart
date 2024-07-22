@@ -5,37 +5,24 @@ import 'flight.dart';
 import 'flight_dao.dart';
 import 'flight_database.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+/// This is the flights page of the application.
+/// This page lists all the flights and provides functionality to add, update, and delete flights.
+/// @author: Yao Yi
+/// Date: Jul 22, 2024
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+/// A stateful widget that displays the flight management page.
+/// The state of this widget is managed by the `_FlightPageState` class.
+class FlightPage extends StatefulWidget {
+  /// The constructor for the `FlightPage` widget.
+  const FlightPage({super.key});
+  /// Override the createState() method
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flights'),
-    );
-  }
+  State<FlightPage> createState() => FlightPageState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+/// The state class for the flight page widget.
+class FlightPageState extends State<FlightPage> {
+  /// Declare attributes
   late TextEditingController _controller1;
   late TextEditingController _controller2;
   late TextEditingController _controller3;
@@ -47,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Flight? selectedFlight;
   bool isCreatingFlight = false;
 
-
+  /// Override initState() method
   @override
   void initState() {
     super.initState();
@@ -60,17 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
     _initializeDatabase();
   }
 
-  //Method to initialize EncryptedSharedPreferences
+  /// Method to initialize EncryptedSharedPreferences.
   Future<void> _initEncryptedSharedPreferences()  async {
     flightPrefs = EncryptedSharedPreferences();
   }
 
-  // Method to initialize database and retrieve data from database
+  /// Method to initialize database and retrieve data from database.
   Future<void> _initializeDatabase() async {
-    // Initialize database object
+    // Initialize database object.
     final database = await $FloorFlightDatabase.databaseBuilder('flight_database.db').build();
     flightDao = database.flightDao;
-    // Retrieve flights from database
+    // Retrieve flights from database.
     flightDao.getAllFlight().then((listOfFlight) {
       setState(() {
         flightList.addAll(listOfFlight);
@@ -78,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  /// Override dispose() method
   @override
   void dispose() {
     _controller1.dispose();
@@ -88,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  // Method to save data to EncryptedSharedPreferences object
+  /// Method to save data to EncryptedSharedPreferences object
   Future<void> _saveFlightToPreferences(Flight flight) async {
     await flightPrefs.setString('Id_${flight.flightId}', flight.flightId);
     await flightPrefs.setString('Dep_${flight.flightId}', flight.departureCity);
@@ -97,23 +85,22 @@ class _MyHomePageState extends State<MyHomePage> {
     await flightPrefs.setString('ETA_${flight.flightId}', flight.arrivalTime);
   }
 
-  // This function returns the flight list widget
+  /// This function returns the flight list widget
   Widget _flightList() {
     return Center(
       child: Column(
           children: [
             // A header row
             Container(
-              color: Colors.grey[200],
-              padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+              padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
               child: const Row(
                 children: [
-                  Expanded(flex:2, child: Text('Row', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
-                  Expanded(flex:3, child: Text('FlightID', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
-                  Expanded(flex:3, child: Text('DEP', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
-                  Expanded(flex:3, child: Text('DEST', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
-                  Expanded(flex:2, child: Text('ETD', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
-                  Expanded(flex:2, child: Text('ETA', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
+                  Expanded(flex:2, child: Text('Row', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black54))),
+                  Expanded(flex:3, child: Text('FlightID', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black54))),
+                  Expanded(flex:3, child: Text('DEP', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black54))),
+                  Expanded(flex:3, child: Text('DEST', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black54))),
+                  Expanded(flex:2, child: Text('ETD', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black54))),
+                  Expanded(flex:2, child: Text('ETA', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black54))),
                 ],
               ),
             ),
@@ -136,50 +123,59 @@ class _MyHomePageState extends State<MyHomePage> {
                 child:ListView.builder(
                   itemCount: flightList.length,
                   itemBuilder: (context, rowNum) {
-                    return GestureDetector(
-                      child: Row(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: GestureDetector(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Expanded(flex:2, child: Text("$rowNum", style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex:3, child: Text(flightList[rowNum].flightId, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex:3, child: Text(flightList[rowNum].departureCity, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex:3, child: Text(flightList[rowNum].destinationCity, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex:2, child: Text(flightList[rowNum].departureTime, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex:2, child: Text(flightList[rowNum].arrivalTime, style: const TextStyle(fontSize: 15.0))),
-                          ]),
-                      onTap: (){
-                        selectedFlight = flightList[rowNum];
-                        setState(() {
-                          _detailsPage();
-                        });
-                      },
+                            Expanded(flex: 2, child: Text("$rowNum", style: const TextStyle(fontSize: 15.0))),
+                            Expanded(flex: 3, child: Text(flightList[rowNum].flightId, style: const TextStyle(fontSize: 15.0))),
+                            Expanded(flex: 3, child: Text(flightList[rowNum].departureCity, style: const TextStyle(fontSize: 15.0))),
+                            Expanded(flex: 3, child: Text(flightList[rowNum].destinationCity, style: const TextStyle(fontSize: 15.0))),
+                            Expanded(flex: 2, child: Text(flightList[rowNum].departureTime, style: const TextStyle(fontSize: 15.0))),
+                            Expanded(flex: 2, child: Text(flightList[rowNum].arrivalTime, style: const TextStyle(fontSize: 15.0))),
+                          ],
+                        ),
+                        onTap: () {
+                          selectedFlight = flightList[rowNum];
+                          setState(() {
+                            _detailsPage();
+                          });
+                        },
+                      ),
                     );
                   },
                 )),
             ),
             // Button to display the flight creation page for users to enter new flight details
-            Padding(
-              padding: const EdgeInsets.only(bottom: 100),
-              child:
-                FilledButton(
-                    child: const Text("Add Flight"),
-                    onPressed: () {
-                      _controller1.clear();
-                      _controller2.clear();
-                      _controller3.clear();
-                      _controller4.clear();
-                      _controller5.clear();
-                      setState(() {
-                        isCreatingFlight = true;
-                      });
-                    }
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () {
+                  _controller1.clear();
+                  _controller2.clear();
+                  _controller3.clear();
+                  _controller4.clear();
+                  _controller5.clear();
+                  setState(() {
+                    isCreatingFlight = true;
+                  });
+                  },
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
                 ),
-            )
+                child: const Text("Add Flight", style: TextStyle(fontSize: 16)),
+              ),
+            ),
           ]),
     );
   }
 
-  // This function returns the createPage widget
+  /// This function returns the createPage widget
   Widget _createPage() {
     return SingleChildScrollView(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -189,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
-                          "Add new flight", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          "Add new flight", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black54),
                       )
                   ),
                   Padding(
@@ -248,12 +244,17 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                   ),
                   Padding(
-                      padding: const EdgeInsets.fromLTRB(40, 40, 40, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             FilledButton(
-                                child: const Text("Submit"),
+                                style: FilledButton.styleFrom(
+                                  minimumSize: const Size(160, 50),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                ),
                                 onPressed: () {
                                   if (_controller1.value.text != "" && _controller2.value.text != "" && _controller3.value.text != "" && _controller4.value.text != "" && _controller5.value.text != "") {
                                   showDialog<String>(
@@ -297,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             ));
                                             Navigator.pop(context);
                                           },
-                                            child: const Text("YES")
+                                            child: const Text("YES", style: TextStyle(fontSize: 16))
                                         ),
                                         TextButton(
                                           onPressed: () {
@@ -306,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             });
                                             Navigator.pop(context);
                                           },
-                                          child: const Text("NO")
+                                          child: const Text("NO", style: TextStyle(fontSize: 16))
                                         )
                                       ]
                                     )
@@ -321,14 +322,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                     );
                                   }
                                 },
+                                child: const Text("Submit", style: TextStyle(fontSize: 16)),
                             ),
                             FilledButton(
-                                child: const Text("Cancel"),
+                                style: FilledButton.styleFrom(
+                                  minimumSize: const Size(160, 50),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                ),
                                 onPressed: () {
                                   setState(() {
                                     isCreatingFlight = false;
                                   });
-                                }
+                                },
+                                child: const Text("Cancel", style: TextStyle(fontSize: 16))
                             ),
                           ]
                       )
@@ -339,7 +347,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // This function returns the flight detailsPage widget
+  /// This function returns the flight detailsPage widget
   Widget _detailsPage() {
     if (selectedFlight != null) {
       // Set the controller text values
@@ -349,283 +357,298 @@ class _MyHomePageState extends State<MyHomePage> {
       _controller4.text = selectedFlight!.departureTime;
       _controller5.text = selectedFlight!.arrivalTime;
 
-      return SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: Center(
-                  child: Text(
-                    "Details of the flight",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    child: Center(
+                      child: Text(
+                        "Details of the flight",
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black54),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                child: Row(
-                  children: [
-                    const Flexible(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Flight ID"),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 7,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: TextField(
-                          controller: _controller1,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Row(
+                      children: [
+                        const Flexible(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Flight ID", style: TextStyle(fontSize: 16)),
                           ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                child: Row(
-                  children: [
-                    const Flexible(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Departure City"),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 7,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: TextField(
-                          controller: _controller2,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                        Flexible(
+                          flex: 3,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextField(
+                              controller: _controller1,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                child: Row(
-                  children: [
-                    const Flexible(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Destination City"),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 7,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: TextField(
-                          controller: _controller3,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Row(
+                      children: [
+                        const Flexible(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Departure City", style: TextStyle(fontSize: 16)),
                           ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                child: Row(
-                  children: [
-                    const Flexible(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Departure Time"),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 7,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: TextField(
-                          controller: _controller4,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                        Flexible(
+                          flex: 3,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextField(
+                              controller: _controller2,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                child: Row(
-                  children: [
-                    const Flexible(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Arrival Time"),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 7,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: TextField(
-                          controller: _controller5,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Row(
+                      children: [
+                        const Flexible(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Destination City", style: TextStyle(fontSize: 16)),
                           ),
                         ),
-                      ),
+                        Flexible(
+                          flex: 3,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextField(
+                              controller: _controller3,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(40, 20, 40, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // The update button to update the information of the selected flight
-                    FilledButton(
-                      child: const Text("Update Flight"),
-                      onPressed: () {
-                        // Store the origin values in text fields
-                        String originalFlightId = selectedFlight!.flightId;
-                        String originalDepartureCity = selectedFlight!.departureCity;
-                        String originalDestinationCity = selectedFlight!.destinationCity;
-                        String originalDepartureTime = selectedFlight!.departureTime;
-                        String originalArrivalTime = selectedFlight!.arrivalTime;
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Row(
+                      children: [
+                        const Flexible(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Departure Time", style: TextStyle(fontSize: 16)),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 3,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextField(
+                              controller: _controller4,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    child: Row(
+                      children: [
+                        const Flexible(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Arrival Time", style: TextStyle(fontSize: 16)),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 3,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextField(
+                              controller: _controller5,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // The update button to update the information of the selected flight
+                        FilledButton(
+                          style: FilledButton.styleFrom(
+                            minimumSize: const Size(160, 50),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            ),
+                          ),
+                          onPressed: () {
+                            // Store the origin values in text fields
+                            String originalFlightId = selectedFlight!.flightId;
+                            String originalDepartureCity = selectedFlight!.departureCity;
+                            String originalDestinationCity = selectedFlight!.destinationCity;
+                            String originalDepartureTime = selectedFlight!.departureTime;
+                            String originalArrivalTime = selectedFlight!.arrivalTime;
 
-                        // Store the updated values in text fields
-                        String newFlightId = _controller1.text;
-                        String newDepartureCity = _controller2.text;
-                        String newDestinationCity = _controller3.text;
-                        String newDepartureTime = _controller4.text;
-                        String newArrivalTime = _controller5.text;
+                            // Store the updated values in text fields
+                            String newFlightId = _controller1.text;
+                            String newDepartureCity = _controller2.text;
+                            String newDestinationCity = _controller3.text;
+                            String newDepartureTime = _controller4.text;
+                            String newArrivalTime = _controller5.text;
 
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Please Confirm'),
-                                content: const Text('Are you sure you want to update this flight?', style: TextStyle(fontSize: 18)),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: const Text("Yes"),
-                                    onPressed: (){
-                                      setState(() {
-                                        // Update the selected flight attributes with the new values
-                                        selectedFlight!.flightId = newFlightId;
-                                        selectedFlight!.departureCity = newDepartureCity;
-                                        selectedFlight!.destinationCity = newDestinationCity;
-                                        selectedFlight!.departureTime = newDepartureTime;
-                                        selectedFlight!.arrivalTime = newArrivalTime;
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Please Confirm'),
+                                    content: const Text('Are you sure you want to update this flight?', style: TextStyle(fontSize: 18)),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text("Yes", style: TextStyle(fontSize: 16)),
+                                        onPressed: (){
+                                          setState(() {
+                                            // Update the selected flight attributes with the new values
+                                            selectedFlight!.flightId = newFlightId;
+                                            selectedFlight!.departureCity = newDepartureCity;
+                                            selectedFlight!.destinationCity = newDestinationCity;
+                                            selectedFlight!.departureTime = newDepartureTime;
+                                            selectedFlight!.arrivalTime = newArrivalTime;
 
-                                        // Update the flight in the database
-                                        flightDao.updateFlight(selectedFlight!);
+                                            // Update the flight in the database
+                                            flightDao.updateFlight(selectedFlight!);
 
-                                        // Update the flight in the EncryptedSharedPreferences
-                                        _saveFlightToPreferences(selectedFlight!);
+                                            // Update the flight in the EncryptedSharedPreferences
+                                            _saveFlightToPreferences(selectedFlight!);
 
-                                        // Update the flight in the ListView
-                                        int index = flightList.indexWhere((flight) => flight.flightId == selectedFlight!.flightId);
-                                        if (index != -1) {
-                                        flightList[index] = selectedFlight!;
+                                            // Update the flight in the ListView
+                                            int index = flightList.indexWhere((flight) => flight.flightId == selectedFlight!.flightId);
+                                            if (index != -1) {
+                                            flightList[index] = selectedFlight!;
+                                            }
+                                          });
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                            content: Text("Flight successfully updated!"),
+                                            duration: Duration(seconds: 5),),
+                                          );
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text("No", style: TextStyle(fontSize: 16)),
+                                        onPressed: (){
+                                          setState(() {
+                                            // Display the origin values in text fields
+                                            _controller1.text = originalFlightId;
+                                            _controller2.text = originalDepartureCity;
+                                            _controller3.text = originalDestinationCity;
+                                            _controller4.text = originalDepartureTime;
+                                            _controller5.text = originalArrivalTime;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ]
+                                )
+                            );
+                          },
+                          child: const Text("Update Flight", style: TextStyle(fontSize: 16)),
+                        ),
+                        // The delete button to remove the selected flight
+                        FilledButton(
+                            style: FilledButton.styleFrom(
+                              minimumSize: const Size(160, 50),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            onPressed: () {
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                    title: const Text('Please Confirm'),
+                                    content: const Text('Are you sure you want to delete this flight?', style: TextStyle(fontSize: 18)),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text("Yes", style: TextStyle(fontSize: 16)),
+                                        onPressed: (){
+                                          setState(() {
+                                            // Remove the selected flight from database
+                                            flightDao.deleteFlight(selectedFlight!);
+
+                                            // Remove the selected flight from EncryptedSharedPreferences
+                                            flightPrefs.remove('Id_${selectedFlight!.flightId}');
+                                            flightPrefs.remove('Dep_${selectedFlight!.flightId}');
+                                            flightPrefs.remove('Dest_${selectedFlight!.flightId}');
+                                            flightPrefs.remove('ETD_${selectedFlight!.flightId}');
+                                            flightPrefs.remove('ETA_${selectedFlight!.flightId}');
+
+                                            // Remove the selected flight from ListView
+                                            flightList.removeWhere((flight) => flight.flightId == selectedFlight!.flightId);
+                                            // Reset the selectedFlight to null
+                                            selectedFlight = null;
+                                          });
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text("Flight has been deleted"),
+                                              duration: Duration(seconds: 5),
+                                            ),
+                                          );
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text("No", style: TextStyle(fontSize: 16)),
+                                        onPressed: () {
+                                          Navigator.pop(context);
                                         }
-                                      });
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                        content: Text("Flight successfully updated!"),
-                                        duration: Duration(seconds: 5),),
-                                      );
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: const Text("No"),
-                                    onPressed: (){
-                                      setState(() {
-                                        // Display the origin values in text fields
-                                        _controller1.text = originalFlightId;
-                                        _controller2.text = originalDepartureCity;
-                                        _controller3.text = originalDestinationCity;
-                                        _controller4.text = originalDepartureTime;
-                                        _controller5.text = originalArrivalTime;
-                                      });
-                                      Navigator.pop(context);
-                                    },
-                                  )
-                                ]
-                            )
-                        );
-                      },
+                                      )
+                                    ]
+                                )
+                            );},
+                            child: const Text("Delete Flight", style: TextStyle(fontSize: 16))
+                        ),
+                      ],
                     ),
-                    // The delete button to remove the selected flight
-                    FilledButton(
-                        child: const Text("Delete Flight"),
-                        onPressed: () {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Please Confirm'),
-                                content: const Text('Are you sure you want to delete this flight?', style: TextStyle(fontSize: 18)),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: const Text("Yes"),
-                                    onPressed: (){
-                                      setState(() {
-                                        // Remove the selected flight from database
-                                        flightDao.deleteFlight(selectedFlight!);
-
-                                        // Remove the selected flight from EncryptedSharedPreferences
-                                        flightPrefs.remove('Id_${selectedFlight!.flightId}');
-                                        flightPrefs.remove('Dep_${selectedFlight!.flightId}');
-                                        flightPrefs.remove('Dest_${selectedFlight!.flightId}');
-                                        flightPrefs.remove('ETD_${selectedFlight!.flightId}');
-                                        flightPrefs.remove('ETA_${selectedFlight!.flightId}');
-
-                                        // Remove the selected flight from ListView
-                                        flightList.removeWhere((flight) => flight.flightId == selectedFlight!.flightId);
-                                        // Reset the selectedFlight to null
-                                        selectedFlight = null;
-                                      });
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text("Flight has been deleted"),
-                                          duration: Duration(seconds: 5),
-                                        ),
-                                      );
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: const Text("No"),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    }
-                                  )
-                                ]
-                            )
-                        );}
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          )
       );
     } else {
       return const Center(
@@ -638,7 +661,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  // Show different layouts depending on the screen size
+  /// Method to display different layouts depending on the screen size
   Widget responsiveLayout() {
     var size = MediaQuery.of(context).size;
     var height = size.height;
@@ -650,8 +673,8 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if ((width > height) && (width > 720)) {
       // This is for the landscape model, flight list on the left side, details on the right side
       return Row(children:[
-        Expanded(child: _flightList()),
-        Expanded(child: _detailsPage())
+        Expanded(flex:2, child: _flightList()),
+        Expanded(flex:3, child: _detailsPage())
       ]);
     }
     // This applies to portrait mode: display the details page once the user selects a flight from the list.
@@ -665,6 +688,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  /// Override build() method
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -680,7 +704,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
-                      foregroundColor: Colors.indigo,
+                      foregroundColor: Colors.white,
                     ),
                     child: const Text("Back"))
             ),
@@ -699,7 +723,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: const Text("Got it"),
+                            child: const Text("Got it", style: TextStyle(fontSize: 16)),
                           ),
                         ],
                       );
@@ -710,28 +734,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   return [
                     const PopupMenuItem<String>(
                       value: 'Click the "Add Flight" button, fill in all the fields and click "Submit". Then click "Yes" to confirm adding the flight, or "No" to cancel.',
-                      child: Text('How to add a flight?'),
+                      child: Text('How to add a new flight?', style: TextStyle(fontSize: 16)),
                     ),
                     const PopupMenuItem<String>(
                       value: 'Simply click on the flight you want to view in the list, it will go to the details page automatically.',
-                      child: Text('How to view flight details?'),
+                      child: Text('How to view flight details?', style: TextStyle(fontSize: 16)),
                     ),
                     const PopupMenuItem<String>(
                       value: 'Go to the details page of the flight you want to update. Fill in the information and click "Update Flight", then click "Yes" to confirm the update, or "No" to cancel.',
-                      child: Text('How to update a flight?'),
+                      child: Text('How to update a flight?', style: TextStyle(fontSize: 16)),
                     ),
                     const PopupMenuItem<String>(
                       value: 'Go to the details page of the flight you want to delete. Click "Delete Flight", then click "Yes" to confirm the deletion, or "No" to cancel.',
-                      child: Text('How to delete a flight?'),
+                      child: Text('How to delete a flight?', style: TextStyle(fontSize: 16)),
                     ),
                   ];
                 },
-                child: const Text("Help", style: TextStyle(fontSize: 16, color: Colors.indigo),),
+                child: const Text("Help", style: TextStyle(fontSize: 16, color: Colors.white),),
               ),
             ),
           ],
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
+          backgroundColor: Colors.black87,
+          title: const Text("Flights",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
         body: responsiveLayout()
     );
