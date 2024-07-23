@@ -80,7 +80,7 @@ class _$CustomersDatabase extends CustomersDatabase {
     Callback? callback,
   ]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
-      version: 2,
+      version: 3,
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
         await callback?.onConfigure?.call(database);
@@ -174,7 +174,7 @@ class _$CustomerDAO extends CustomerDAO {
   @override
   Future<List<Customers>> getCustomer(int customerId) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM Customers WEHERE customerId = ?1',
+        'SELECT * FROM Customers WHERE customerId = ?1',
         mapper: (Map<String, Object?> row) => Customers(
             row['customerId'] as int,
             row['firstName'] as String,

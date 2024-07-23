@@ -4,7 +4,9 @@ import 'package:floor/floor.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart' as sqflite;
 part 'CustomersDatabase.g.dart';
-@Database(version: 2, entities: [Customers])
+
+/// Represents the database for storing customer information.
+@Database(version: 3, entities: [Customers])
 abstract class CustomersDatabase extends FloorDatabase{
   CustomerDAO get getDao;
 }

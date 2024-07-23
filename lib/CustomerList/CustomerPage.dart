@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -6,28 +7,34 @@ import 'CustomersDatabase.dart';
 import 'Customers.dart';
 import 'CustomerRepository.dart';
 
+/// The CustomerPage displays a page where users can view, add, update and delete customer's information.
 class CustomerPage extends StatefulWidget { // stateful means has variables
   @override
   State<CustomerPage> createState() => CustomerPageState();
 }
 
 class CustomerPageState extends State<CustomerPage> {
+  /// these controllers record the value of first name, last name, address. birthday
   late TextEditingController _controllerFirstName;
   late TextEditingController _controllerLastName;
   late TextEditingController _controllerAddress;
   late TextEditingController _controllerBirthday;
+  DateTime? _birthdayDate;
 
 
   /// create a DAO object
   late CustomerDAO myDAO;
 
+  /// The list of customers retrieved from the database.
   List<Customers> customer =  [] ; // empty array
 
+  /// The currently selected customer for viewing or editing details.
   Customers? selectedCustomer = null;
 
+  /// Indicates whether the user is adding a new customer or not.
   String addCustomer = "";
 
-
+/// Initializes the state of the `CustomerPageState` class
   @override
   void initState() {
     // initialize object, onloaded in HTML
@@ -51,9 +58,9 @@ class CustomerPageState extends State<CustomerPage> {
       } );
     });
   }
-
+/// Releases the resources
   @override
-  void dispose() { //unloading the page
+  void dispose() {
     super.dispose();
     _controllerFirstName.dispose(); //delete memory of _controller
     _controllerLastName.dispose();
@@ -61,18 +68,82 @@ class CustomerPageState extends State<CustomerPage> {
     _controllerBirthday.dispose();
 
   }
+  /// A date picker to allow the user to select birthday and to record the value
+  Future<void> _selectDate(BuildContext context) async{
+    final DateTime? date = await showDatePicker(
+      context:context,
+      initialDate:_birthdayDate?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate:DateTime(2100),
+    );
+    if (date != null && date != _birthdayDate) {
+      setState(() {
+        _birthdayDate = date;
+        _controllerBirthday.text = "${_birthdayDate!.year}-${_birthdayDate!.month.toString().padLeft(2, '0')}-${_birthdayDate!.day.toString().padLeft(2, '0')}";
+      });
+    }
+  }
+/// Shows a dialog asking whether to start with a blank page or copy fields from the previous customer.
+  void chooseBlockOrCopy(){
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Do you want to start with a blank page or '
+              'copy the fields from the previous customer?'),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  selectedCustomer= null;
+                  addCustomer = "yes";
 
+                  // load the data stored in repository
+                  CustomerRepository.loadData().then((_) {
+                    _controllerFirstName.text = CustomerRepository.firstName;
+                    _controllerLastName.text = CustomerRepository.lastName;
+                    _controllerAddress.text = CustomerRepository.address;
+                    _controllerBirthday.text = CustomerRepository.birthday;
+                  });
+                });
+                Navigator.pop(context);
+              },
+              child: const Text("Copy the fields",style: TextStyle(color: Colors.green)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+
+                  selectedCustomer= null;
+                  addCustomer = "yes";
+                  CustomerRepository.clearData();
+                  _controllerFirstName.text = "";
+                  _controllerLastName.text = "";
+                  _controllerAddress.text ="";
+                  _controllerBirthday.text = "";
+                });
+
+
+                Navigator.pop(context);
+              },
+              child: const Text("Start with a blank page",style: TextStyle(color: Colors.green)),
+            ),
+          ],
+        ),
+      );
+
+  }
+/// Builds a widget displaying the list of customers.
   Widget CustomerList() {
 
     return Scaffold(
 
-      backgroundColor: Colors.deepPurple[50]?.withOpacity(0.5),
+      backgroundColor: Colors.green[50]?.withOpacity(0.5),
 
       body: Center(
           child: Column( mainAxisAlignment: MainAxisAlignment.center, children:<Widget>[
             const SizedBox(height: 90),
 
-            Text("Current Customer List: ", style: TextStyle(fontSize: 24, color: Colors.purple, fontWeight: FontWeight.bold, ),),
+            Text("Current Customer List: ", style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
 
             const SizedBox(height: 20),
 
@@ -85,7 +156,7 @@ class CustomerPageState extends State<CustomerPage> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: EdgeInsets.only(top: 1.0), // Add some padding at the top
-                    child: Text('There are no items in the list', style: TextStyle(fontSize: 18, color: Colors.indigoAccent,),),
+                    child: Text('There are no items in the list', style: TextStyle(fontSize: 18, color: Colors.green,),),
                   ),
                 )
 
@@ -97,10 +168,10 @@ class CustomerPageState extends State<CustomerPage> {
                           child:  GestureDetector(child:
                           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text( customer[rowNum].firstName, style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                                Text( customer[rowNum].lastName, style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                                Text( customer[rowNum].address, style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                                Text( customer[rowNum].birthday, style: TextStyle(fontSize: 18, color: Colors.purple ),)
+                                Text( customer[rowNum].firstName, style: TextStyle(fontSize: 18, color: Colors.green ),),
+                                Text( customer[rowNum].lastName, style: TextStyle(fontSize: 18, color: Colors.green ),),
+                                Text( customer[rowNum].address, style: TextStyle(fontSize: 18, color: Colors.green ),),
+                                Text( customer[rowNum].birthday, style: TextStyle(fontSize: 18, color: Colors.green ),)
                               ]
                           ),
                               //onDoubleTap(){}; onLongPress(){}; onHorizontalDragUpdate(){}
@@ -126,23 +197,8 @@ class CustomerPageState extends State<CustomerPage> {
             Container(
               padding: EdgeInsets.all(30),
               child: Row( mainAxisAlignment: MainAxisAlignment.center, children:[
-                ElevatedButton( child: Text("Add Customer",  style: TextStyle(fontSize: 15, color:Colors.purple, fontWeight: FontWeight.bold, ) ),
-                    onPressed: () {
-
-                      setState(() {
-                        selectedCustomer= null;
-                        addCustomer = "yes";
-
-                        // load the data stored in repository
-                        CustomerRepository.loadData().then((_) {
-                          _controllerFirstName.text = CustomerRepository.firstName;
-                          _controllerLastName.text = CustomerRepository.lastName;
-                          _controllerAddress.text = CustomerRepository.address;
-                          _controllerBirthday.text = CustomerRepository.birthday;
-                        });
-                      });
-                    } ),
-              ]),
+                ElevatedButton( child: Text("Add Customer",  style: TextStyle(fontSize: 15, color:Colors.green, fontWeight: FontWeight.bold, ) ),
+              onPressed: chooseBlockOrCopy,)]),
             ),
 
           ],
@@ -150,19 +206,19 @@ class CustomerPageState extends State<CustomerPage> {
       ),
     );
   }
-
+/// Builds a widget for adding a new customer.
   Widget appCustomerPage() {
 
     return Scaffold(
 
-      backgroundColor: Colors.purple[50]?.withOpacity(0.5),
+      backgroundColor: Colors.green[50]?.withOpacity(0.5),
 
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("Add New Customer: ", style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
+            Text("Add New Customer: ", style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
 
             const SizedBox(height: 40),
 
@@ -171,8 +227,10 @@ class CustomerPageState extends State<CustomerPage> {
                 decoration: InputDecoration(
                     hintText:"Type here",
                     border: OutlineInputBorder(),
-                    labelText: "Customer First Name"
-                ))),
+                    labelText: "Customer First Name",
+                ),
+              enableInteractiveSelection: false,
+            )),
 
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerLastName,
@@ -180,7 +238,8 @@ class CustomerPageState extends State<CustomerPage> {
                     hintText:"Type here",
                     border: OutlineInputBorder(),
                     labelText: "Customer Last Name"
-                ))),
+                ),
+              enableInteractiveSelection: false,)),
 
 
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
@@ -189,16 +248,25 @@ class CustomerPageState extends State<CustomerPage> {
                     hintText:"Type here",
                     border: OutlineInputBorder(),
                     labelText: "Customer Address"
-                ))),
+                ),
+              enableInteractiveSelection: false,)),
 
 
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerBirthday,
                 decoration: InputDecoration(
-                    hintText:"yyyy-MM-dd",
+                    hintText:"Select Birthday",
                     border: OutlineInputBorder(),
-                    labelText: "Customer Birthday"
-                ))),
+                    labelText: "Customer Birthday",
+                  suffixIcon:IconButton(
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () => _selectDate(context),
+                  ) ,
+                ),
+              readOnly: true,
+            ),
+            ),
+
 
             const SizedBox(height: 50),
 
@@ -226,7 +294,7 @@ class CustomerPageState extends State<CustomerPage> {
                 },
               );
             },
-              child:  Text("Submit", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),  ),
+              child:  Text("Submit", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )),  ),
 
           ],
         ),
@@ -236,7 +304,7 @@ class CustomerPageState extends State<CustomerPage> {
   }
 
 
-  // check if there is data
+  /// Check the values of fields is empty or not
   bool validateCustomerInfo() {
     if (_controllerFirstName.text.isEmpty ||
         _controllerLastName.text.isEmpty ||
@@ -251,7 +319,7 @@ class CustomerPageState extends State<CustomerPage> {
 
 
 
-  //This function gets run when you click the button
+  /// This function gets run when you click the button
   void buttonClicked() async {
 
     // store data in the database
@@ -320,13 +388,7 @@ class CustomerPageState extends State<CustomerPage> {
 
   }
 
-
-
-
-
-
-
-
+/// Builds the widget of customer details page
   Widget DetailsPage() {
     if (selectedCustomer == null) {
       return Text(" ");
@@ -334,14 +396,14 @@ class CustomerPageState extends State<CustomerPage> {
     else {
       return Scaffold(
 
-          backgroundColor: Colors.purple[50]?.withOpacity(0.5),
+          backgroundColor: Colors.green[50]?.withOpacity(0.5),
 
           body: Center(
               child: Column(mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 
                   Text("Details of Customers ",
-                    style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
+                    style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
 
                   const SizedBox(height: 40),
 
@@ -354,7 +416,6 @@ class CustomerPageState extends State<CustomerPage> {
                         labelText: "Customer First Name",
                       ))),
 
-
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerLastName,
                       decoration: InputDecoration(
@@ -362,7 +423,6 @@ class CustomerPageState extends State<CustomerPage> {
                           border: OutlineInputBorder(),
                           labelText: "Customer Last Name"
                       ))),
-
 
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerAddress,
@@ -375,11 +435,18 @@ class CustomerPageState extends State<CustomerPage> {
 
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerBirthday,
-                      decoration: InputDecoration(
-                          hintText:"yyyy-MM-dd",
-                          border: OutlineInputBorder(),
-                          labelText: "Customer Birthday"
-                      ))),
+                    decoration: InputDecoration(
+                      hintText:"Select Birthday",
+                      border: OutlineInputBorder(),
+                      labelText: "Customer Birthday",
+                      suffixIcon:IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        onPressed: () => _selectDate(context),
+                      ) ,
+                    ),
+                    readOnly: true,
+                  ),
+                  ),
 
                   const SizedBox(height: 50),
 
@@ -410,7 +477,7 @@ class CustomerPageState extends State<CustomerPage> {
                               );
                             },
                           );
-                        }, child:  Text("Update", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, ))  ),
+                        }, child:  Text("Update", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green ))  ),
 
                         SizedBox(width: 20),
 
@@ -455,7 +522,7 @@ class CustomerPageState extends State<CustomerPage> {
                               );
                             },
                           );
-                        }, child:  Text("Delete", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )))
+                        }, child:  Text("Delete", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )))
                       ]
                   ),
                 ],
@@ -465,7 +532,7 @@ class CustomerPageState extends State<CustomerPage> {
     }
   }
 
-
+/// Update customer information logics
   Future<void> updateClicked () async {
 
     // Update the existing item
@@ -502,7 +569,7 @@ class CustomerPageState extends State<CustomerPage> {
 
 
   }
-
+/// Display different pages according to page size
   Widget ResponsiveLayout(){
 
     var size = MediaQuery.of(context).size;
@@ -512,16 +579,20 @@ class CustomerPageState extends State<CustomerPage> {
     if ((width>height) && (width > 720))
     {
       if (selectedCustomer == null && addCustomer == "") {
-        return Row( children:[ Flexible( flex: 1, child: CustomerList(),),
+        return Row( children:[
+          Flexible( flex: 1, child: CustomerList(),),
           Flexible(flex: 1, child: Text(" "))]);
       }
       else if (selectedCustomer == null && addCustomer == "yes"){
-        return Row( children:[ Flexible( flex: 1, child: CustomerList(),),
+        return Row( children:[
+            Flexible( flex: 1, child: CustomerList(),),
           Flexible(flex: 1, child: appCustomerPage()),]);
       }
       else if (selectedCustomer != null && addCustomer == "") {
-        return Row( children:[ Flexible( flex: 1, child: CustomerList(),),
-          Flexible(flex: 1, child: DetailsPage())]);
+        return Row( children:[
+          Flexible( flex: 1, child: CustomerList(),),
+          Flexible(flex: 1, child: DetailsPage())
+        ]);
       }
       else return  Text(" ");
     }
@@ -543,7 +614,7 @@ class CustomerPageState extends State<CustomerPage> {
 
     }
   }
-
+/// Introduce the user to the basic operation of this page
   void showCustomDialog(BuildContext context, String value) {
     String dialogTitle;
     Widget dialogContent;
@@ -594,13 +665,13 @@ class CustomerPageState extends State<CustomerPage> {
     );
   }
 
-
+/// Creates a `Scaffold` widget with an `AppBar` and a body containing the `ResponsiveLayout` widget.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text("Customer", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold, ) ),
+          backgroundColor: Colors.green,
+          title: Text("Customer", style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold, ) ),
           actions: [
             TextButton(onPressed: () {
               setState(() {
@@ -608,7 +679,7 @@ class CustomerPageState extends State<CustomerPage> {
                 selectedCustomer = null;
               });
             },
-              child:Text("Clear the Selected Customer", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),
+              child:Text("Clear the Selected Customer", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )),
             ),
 
             SizedBox(width: 20),
@@ -636,7 +707,7 @@ class CustomerPageState extends State<CustomerPage> {
                   child: Text('How to delete the Customer?'),
                 ),
               ],
-              child: Text("Help", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold)),
+              child: Text("Help", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
             ),
 
             SizedBox(width: 20),
@@ -650,7 +721,4 @@ class CustomerPageState extends State<CustomerPage> {
     );
 
   }
-
-
-
 }
