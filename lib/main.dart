@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 
+import 'CustomerList/CustomerPage.dart';
+
+
 import 'flight/flight_list_page.dart';
 import 'Airplane/AirplanePage.dart';
+
 
 
 void main() {
@@ -23,6 +27,17 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(title: 'Home Page'),
+
+        '/CustomerPage': (context) { return  CustomerPage(); }, //Same as above =>
+      },
+
+
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
         '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
         '/FlightPage': (context) { return const FlightPage();},
       },
@@ -32,6 +47,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+
     );
   }
 }
@@ -79,6 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
+
+              onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
+              child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
+
               onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
               child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
             ),
