@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(title: 'Home Page'),
+        '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
         '/FlightPage': (context) { return const FlightPage();},
       },
 
@@ -31,15 +32,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-        '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
-      },
-
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-
     );
   }
 }
