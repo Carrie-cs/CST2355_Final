@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
+
 import 'CustomerList/CustomerPage.dart';
+
+
+import 'flight/flight_list_page.dart';
+import 'Airplane/AirplanePage.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +27,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(title: 'Home Page'),
+
         '/CustomerPage': (context) { return  CustomerPage(); }, //Same as above =>
       },
 
@@ -29,6 +37,17 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+        '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
+        '/FlightPage': (context) { return const FlightPage();},
+      },
+
+      theme: ThemeData(
+        // This is the theme of your application.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+
     );
   }
 }
@@ -52,18 +71,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +95,16 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
+
               onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
               child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
+
+              onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
+              child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
+            ),
+            ElevatedButton(
+              onPressed: (){Navigator.pushNamed(context,"/FlightPage" );},
+              child:const Text("Flight List", style: TextStyle(color: Colors.blue)),
             ),
 
           ],
