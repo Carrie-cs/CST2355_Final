@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+
 import 'flight/flight_list_page.dart';
+import 'Airplane/AirplanePage.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +31,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+        '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
+      },
+
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
     );
   }
 }
@@ -82,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: (){Navigator.pushNamed(context,"/FlightPage" );},
               child:const Text("Flight List", style: TextStyle(color: Colors.blue)),
             ),
+
           ],
         ),
       ),
