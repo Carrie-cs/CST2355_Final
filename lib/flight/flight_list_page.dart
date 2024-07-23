@@ -90,6 +90,10 @@ class FlightPageState extends State<FlightPage> {
     return Center(
       child: Column(
           children: [
+            const Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 30),
+                child: Text("Current Flights", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+            ),
             // A header row
             Container(
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
@@ -129,7 +133,7 @@ class FlightPageState extends State<FlightPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Expanded(flex: 2, child: Text("$rowNum", style: const TextStyle(fontSize: 15.0))),
+                            Expanded(flex: 2, child: Text("${rowNum + 1}", style: const TextStyle(fontSize: 15.0))),
                             Expanded(flex: 3, child: Text(flightList[rowNum].flightId, style: const TextStyle(fontSize: 15.0))),
                             Expanded(flex: 3, child: Text(flightList[rowNum].departureCity, style: const TextStyle(fontSize: 15.0))),
                             Expanded(flex: 3, child: Text(flightList[rowNum].destinationCity, style: const TextStyle(fontSize: 15.0))),
@@ -185,7 +189,7 @@ class FlightPageState extends State<FlightPage> {
                   const Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
-                          "Add new flight", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black54),
+                          "Add new flight", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                       )
                   ),
                   Padding(
@@ -244,13 +248,13 @@ class FlightPageState extends State<FlightPage> {
                       )
                   ),
                   Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+                      padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             FilledButton(
                                 style: FilledButton.styleFrom(
-                                  minimumSize: const Size(160, 50),
+                                  minimumSize: const Size(150, 50),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero,
                                   ),
@@ -298,7 +302,7 @@ class FlightPageState extends State<FlightPage> {
                                             ));
                                             Navigator.pop(context);
                                           },
-                                            child: const Text("YES", style: TextStyle(fontSize: 16))
+                                            child: const Text("Yes", style: TextStyle(fontSize: 16))
                                         ),
                                         TextButton(
                                           onPressed: () {
@@ -307,7 +311,7 @@ class FlightPageState extends State<FlightPage> {
                                             });
                                             Navigator.pop(context);
                                           },
-                                          child: const Text("NO", style: TextStyle(fontSize: 16))
+                                          child: const Text("No", style: TextStyle(fontSize: 16))
                                         )
                                       ]
                                     )
@@ -324,9 +328,10 @@ class FlightPageState extends State<FlightPage> {
                                 },
                                 child: const Text("Submit", style: TextStyle(fontSize: 16)),
                             ),
+                            const SizedBox(width: 20),
                             FilledButton(
                                 style: FilledButton.styleFrom(
-                                  minimumSize: const Size(160, 50),
+                                  minimumSize: const Size(150, 50),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero,
                                   ),
@@ -369,12 +374,12 @@ class FlightPageState extends State<FlightPage> {
                     child: Center(
                       child: Text(
                         "Details of the flight",
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black54),
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -400,7 +405,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -426,7 +431,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -452,7 +457,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -478,7 +483,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -506,12 +511,12 @@ class FlightPageState extends State<FlightPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // The update button to update the information of the selected flight
                         FilledButton(
                           style: FilledButton.styleFrom(
-                            minimumSize: const Size(160, 50),
+                            minimumSize: const Size(150, 50),
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
                             ),
@@ -588,10 +593,11 @@ class FlightPageState extends State<FlightPage> {
                           },
                           child: const Text("Update Flight", style: TextStyle(fontSize: 16)),
                         ),
+                        const SizedBox(width: 20),
                         // The delete button to remove the selected flight
                         FilledButton(
                             style: FilledButton.styleFrom(
-                              minimumSize: const Size(160, 50),
+                              minimumSize: const Size(150, 50),
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.zero,
                               ),
@@ -670,11 +676,12 @@ class FlightPageState extends State<FlightPage> {
     // If user click on the 'Add Flight' button, the create page will appear
     if (isCreatingFlight) {
       return _createPage();
-    } else if ((width > height) && (width > 720)) {
-      // This is for the landscape model, flight list on the left side, details on the right side
+    }
+    // This is for the landscape model, flight list on the left side, details on the right side
+    if ((width > height) && (width > 720)) {
       return Row(children:[
-        Expanded(flex:2, child: _flightList()),
-        Expanded(flex:3, child: _detailsPage())
+        Expanded(flex:5, child: _flightList()),
+        Expanded(flex:4, child: _detailsPage())
       ]);
     }
     // This applies to portrait mode: display the details page once the user selects a flight from the list.
@@ -693,9 +700,17 @@ class FlightPageState extends State<FlightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            tooltip: 'Back to homepage',
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           actions: [
             Padding(
-                padding: const EdgeInsets.only(right: 5),
+                padding: const EdgeInsets.only(right: 10),
                 child:
                 TextButton(onPressed: () {
                   setState(() {
@@ -706,7 +721,7 @@ class FlightPageState extends State<FlightPage> {
                       textStyle: const TextStyle(fontSize: 16),
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text("Back"))
+                    child: const Text("Back to List"))
             ),
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
