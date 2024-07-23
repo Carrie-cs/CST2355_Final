@@ -47,7 +47,7 @@ class CustomerPageState extends State<CustomerPage> {
     // create the database
     // can not use the await inside the initState
     // final database = await $FloorAirplaneDatabase.databaseBuilder('airplane_database.db').build();
-    $FloorCustomersDatabase.databaseBuilder('airplane_database.db').build().then((database){
+    $FloorCustomersDatabase.databaseBuilder('customer_database.db').build().then((database){
       myDAO = database.getDao;
 
       // retrieve all items from DB, and add these to the list each time you restart the app

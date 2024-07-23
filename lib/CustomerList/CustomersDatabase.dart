@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 part 'CustomersDatabase.g.dart';
 
 /// Represents the database for storing customer information.
-@Database(version: 3, entities: [Customers])
+@Database(version: 2, entities: [Customers])
 abstract class CustomersDatabase extends FloorDatabase{
   CustomerDAO get getDao;
 }

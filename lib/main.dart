@@ -27,26 +27,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(title: 'Home Page'),
-
+        '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
+        '/FlightPage': (context) { return const FlightPage();},
         '/CustomerPage': (context) { return  CustomerPage(); }, //Same as above =>
       },
-
 
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-
-        '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
-        '/FlightPage': (context) { return const FlightPage();},
-      },
-
-      theme: ThemeData(
-        // This is the theme of your application.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
 
     );
   }
@@ -95,10 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-
               onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
               child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
-
+            ),
+            ElevatedButton(
               onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
               child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
             ),
