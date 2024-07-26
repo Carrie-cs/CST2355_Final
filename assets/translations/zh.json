@@ -1,0 +1,16 @@
+{
+  "Airplane_List": "机型列表",
+  "Add_Airplane": "添加机型",
+  "Add_New_Airplane": "新机型",
+  "Airplane_Type": "飞机型号",
+  "Airplane_Number_Of_Passenger": "客容量",
+  "Airplane_Max_Speed": "最大速度",
+  "Airplane_Fly_Distance": "飞行距离",
+  "Submit_New_Airplane": "提交新机型",
+  "Details_of_Airplane": "机型信息",
+  "Update_Airplane": "更新机型",
+  "Update": "更新",
+  "Delete": "删除",
+  "Help": "帮助",
+  "Clear": "清除"
+}
