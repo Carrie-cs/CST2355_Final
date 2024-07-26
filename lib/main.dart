@@ -1,19 +1,59 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'AppLocalizations.dart';
 import 'Airplane/AirplanePage.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+
+  @override
+  _MyAppState createState() {
+    return _MyAppState();
+  }
+
+  static void setLocale(BuildContext context, Locale newLocale) async {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.changeLanguage(newLocale);
+  }
+
+}
+
+class _MyAppState extends State<MyApp>
+{
+
+  var _locale = Locale("en", "CA"); //default is english from Canada
+
+  void changeLanguage(Locale newLanguage)
+  {
+    setState(() {
+      _locale = newLanguage; //set app to new language, and redraw
+    });
+
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      supportedLocales:  const<Locale> [
+        Locale("en", "CA"),
+        Locale("zh", "CH"),//country doesn't matter in this case
+      ] ,
+
+      localizationsDelegates: const[
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      locale: _locale, //default is "en", "CA" from above
+
       title: 'Flutter Demo',
 
       //routers

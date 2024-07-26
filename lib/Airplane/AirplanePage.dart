@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+import '../AppLocalizations.dart';
+import '../main.dart';
 import 'AirplaneDAO.dart';
 import 'AirplaneDatabase.dart';
 import 'AirplaneItem.dart';
@@ -14,7 +16,6 @@ class AirplanePage extends StatefulWidget { // stateful means has variables
   @override
   State<AirplanePage> createState() => AirplanePageState();
 }
-
 
 
 class AirplanePageState extends State<AirplanePage> {
@@ -93,7 +94,7 @@ class AirplanePageState extends State<AirplanePage> {
         child: Column( mainAxisAlignment: MainAxisAlignment.center, children:<Widget>[
           const SizedBox(height: 90),
 
-          Text("Current Airplane List: ", style: TextStyle(fontSize: 24, color: Colors.purple, fontWeight: FontWeight.bold, ),),
+          Text(AppLocalizations.of(context)!.translate('Airplane_List')!, style: TextStyle(fontSize: 24, color: Colors.purple, fontWeight: FontWeight.bold, ),),
 
           const SizedBox(height: 20),
 
@@ -118,8 +119,9 @@ class AirplanePageState extends State<AirplanePage> {
                           child:  GestureDetector(child:
                            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                            Text("Airplane Type ${rowNum+1}: ", style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                            Text( airplane[rowNum].type, style: TextStyle(fontSize: 18, color: Colors.purple ),),
+                              Text(AppLocalizations.of(context)!.translate('Airplane_Type')!, style: TextStyle(fontSize: 18, color: Colors.purple ),),
+                              Text("${rowNum+1}: ", style: TextStyle(fontSize: 18, color: Colors.purple ),),
+                              Text( airplane[rowNum].type, style: TextStyle(fontSize: 18, color: Colors.purple ),),
                       ]
                   ),
                       //onDoubleTap(){}; onLongPress(){}; onHorizontalDragUpdate(){}
@@ -145,7 +147,7 @@ class AirplanePageState extends State<AirplanePage> {
            Container(
              padding: EdgeInsets.all(30),
              child: Row( mainAxisAlignment: MainAxisAlignment.center, children:[
-               ElevatedButton( child: Text("Add Airplane",  style: TextStyle(fontSize: 15, color:Colors.purple, fontWeight: FontWeight.bold, ) ),
+               ElevatedButton( child: Text(AppLocalizations.of(context)!.translate('Add_Airplane')!,  style: TextStyle(fontSize: 15, color:Colors.purple, fontWeight: FontWeight.bold, ) ),
                 onPressed: () {
 
                   setState(() {
@@ -185,7 +187,7 @@ class AirplanePageState extends State<AirplanePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-             Text("Add New Airplane: ", style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
+             Text(AppLocalizations.of(context)!.translate('Add_New_Airplane')!, style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
 
             const SizedBox(height: 40),
 
@@ -194,7 +196,7 @@ class AirplanePageState extends State<AirplanePage> {
                 decoration: InputDecoration(
                     hintText:"Type here",
                     border: OutlineInputBorder(),
-                    labelText: "Airplane Type"
+                    labelText: AppLocalizations.of(context)!.translate('Airplane_Type')!,
                 ))),
 
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
@@ -202,7 +204,7 @@ class AirplanePageState extends State<AirplanePage> {
                 decoration: InputDecoration(
                     hintText:"Type here",
                     border: OutlineInputBorder(),
-                    labelText: "Airplane Number Of Passenger"
+                    labelText: AppLocalizations.of(context)!.translate('Airplane_Number_Of_Passenger')!,
                 ))),
 
 
@@ -211,7 +213,7 @@ class AirplanePageState extends State<AirplanePage> {
                 decoration: InputDecoration(
                     hintText:"Type here",
                     border: OutlineInputBorder(),
-                    labelText: "Airplane Max Speed"
+                    labelText: AppLocalizations.of(context)!.translate('Airplane_Max_Speed')!
                 ))),
 
 
@@ -220,7 +222,7 @@ class AirplanePageState extends State<AirplanePage> {
                 decoration: InputDecoration(
                     hintText:"Type here",
                     border: OutlineInputBorder(),
-                    labelText: "Airplane Fly Distance"
+                    labelText: AppLocalizations.of(context)!.translate('Airplane_Fly_Distance')!
                 ))),
 
             const SizedBox(height: 50),
@@ -251,7 +253,7 @@ class AirplanePageState extends State<AirplanePage> {
 
 
             },
-                child:  Text("Submit New Airplane", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),  ),
+                child:  Text(AppLocalizations.of(context)!.translate('Submit_New_Airplane')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),  ),
 
           ],
         ),
@@ -373,7 +375,7 @@ class AirplanePageState extends State<AirplanePage> {
         child: Column(mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
 
-            Text("Details of Airplane ${selectedItem!.type}", style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
+            Text(AppLocalizations.of(context)!.translate('Details_of_Airplane')!, style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
 
           const SizedBox(height: 40),
 
@@ -383,7 +385,7 @@ class AirplanePageState extends State<AirplanePage> {
               decoration: InputDecoration(
                   hintText:"Type here",
                   border: OutlineInputBorder(),
-                  labelText: "Airplane Type",
+                  labelText: AppLocalizations.of(context)!.translate('Airplane_Type')!,
               ))),
 
 
@@ -392,7 +394,7 @@ class AirplanePageState extends State<AirplanePage> {
               decoration: InputDecoration(
                   hintText:"Type here",
                   border: OutlineInputBorder(),
-                  labelText: "Airplane Number Of Passenger"
+                  labelText: AppLocalizations.of(context)!.translate('Airplane_Number_Of_Passenger')!
               ))),
 
 
@@ -401,7 +403,7 @@ class AirplanePageState extends State<AirplanePage> {
               decoration: InputDecoration(
                   hintText:"Type here",
                   border: OutlineInputBorder(),
-                  labelText: "Airplane Max Speed"
+                  labelText: AppLocalizations.of(context)!.translate('Airplane_Max_Speed')!
               ))),
 
 
@@ -410,7 +412,7 @@ class AirplanePageState extends State<AirplanePage> {
               decoration: InputDecoration(
                   hintText:"Type here",
                   border: OutlineInputBorder(),
-                  labelText: "Airplane Fly Distance"
+                  labelText: AppLocalizations.of(context)!.translate('Airplane_Fly_Distance')!
               ))),
 
           const SizedBox(height: 50),
@@ -425,7 +427,7 @@ class AirplanePageState extends State<AirplanePage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Update Airplane'),
+                        title: Text(AppLocalizations.of(context)!.translate('Update_Airplane')!),
                         content: Text('Do you want to update this airplane?'),
                         actions: <Widget>[
                           TextButton(
@@ -444,7 +446,7 @@ class AirplanePageState extends State<AirplanePage> {
                   );
 
 
-                }, child:  Text("Update", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, ))  ),
+                }, child:  Text(AppLocalizations.of(context)!.translate('Update')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, ))  ),
 
                 SizedBox(width: 20),
 
@@ -493,7 +495,7 @@ class AirplanePageState extends State<AirplanePage> {
                       );
                     },
                   );
-                }, child:  Text("Delete", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )))
+                }, child:  Text(AppLocalizations.of(context)!.translate('Delete')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )))
 
               ]
           ),
@@ -650,13 +652,15 @@ class AirplanePageState extends State<AirplanePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text("Airplane", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold, ) ),
           actions: [
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("English")),
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文")),
             TextButton(onPressed: () {
               setState(() {
                 addItem = "";
                 selectedItem = null;
               });
             },
-                child:Text("Clear the Selected Item", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),
+                child:Text(AppLocalizations.of(context)!.translate('Clear')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),
             ),
 
             SizedBox(width: 20),
@@ -684,7 +688,7 @@ class AirplanePageState extends State<AirplanePage> {
                   child: Text('How to delete the Airplane?'),
                 ),
               ],
-              child: Text("Help", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold)),
+              child: Text(AppLocalizations.of(context)!.translate('Help')!, style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold)),
             ),
 
             SizedBox(width: 20),

@@ -1,12 +1,13 @@
 
 
-// floor will generate the functions for us, so we mark this class as abstract
+
 
 import 'package:floor/floor.dart';
 import 'package:cst2335final/Airplane/AirplaneItem.dart';
 
 
-@dao // this is a DAO class
+/// This is AirplaneDAO class
+@dao
 abstract class AirplaneDAO {
 
   //insert:
