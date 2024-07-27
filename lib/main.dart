@@ -1,3 +1,4 @@
+import 'package:cst2335final/reservation/ReservationPage.dart';
 import 'package:flutter/material.dart';
 
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
         '/FlightPage': (context) { return const FlightPage();},
         '/CustomerPage': (context) { return  CustomerPage(); }, //Same as above =>
+        '/ReservationPage': (context) { return  ReservationPage(); },
       },
 
       theme: ThemeData(
@@ -96,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: (){Navigator.pushNamed(context,"/FlightPage" );},
               child:const Text("Flight List", style: TextStyle(color: Colors.blue)),
             ),
-
+            ElevatedButton(
+              onPressed: (){Navigator.pushNamed(context,"/ReservationPage" );},
+              child:const Text("Reservation List", style: TextStyle(color: Colors.blue)),
+            ),
           ],
         ),
       ),
