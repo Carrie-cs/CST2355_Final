@@ -185,7 +185,7 @@ class FlightPageState extends State<FlightPage> {
                   const Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Text(
-                          "Add new flight", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black54),
+                        "Add new flight", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                       )
                   ),
                   Padding(
@@ -244,89 +244,90 @@ class FlightPageState extends State<FlightPage> {
                       )
                   ),
                   Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
+                      padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             FilledButton(
-                                style: FilledButton.styleFrom(
-                                  minimumSize: const Size(160, 50),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero,
-                                  ),
+                              style: FilledButton.styleFrom(
+                                minimumSize: const Size(150, 50),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero,
                                 ),
-                                onPressed: () {
-                                  if (_controller1.value.text != "" && _controller2.value.text != "" && _controller3.value.text != "" && _controller4.value.text != "" && _controller5.value.text != "") {
+                              ),
+                              onPressed: () {
+                                if (_controller1.value.text != "" && _controller2.value.text != "" && _controller3.value.text != "" && _controller4.value.text != "" && _controller5.value.text != "") {
                                   showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) => AlertDialog(
-                                      title: const Text('Please Confirm'),
-                                      content: const Text('Are you sure you want to add this flight?', style: TextStyle(fontSize: 18)),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: (){
-                                            setState(() {
-                                              var newFlightId = _controller1.value.text;
-                                              var newDepartureCity = _controller2.value.text;
-                                              var newDestinationCity = _controller3.value.text;
-                                              var newDepartureTime = _controller4.value.text;
-                                              var newArrivalTime = _controller5.value.text;
-                                              var flight = Flight(newFlightId, newDepartureCity, newDestinationCity, newDepartureTime, newArrivalTime);
+                                      context: context,
+                                      builder: (BuildContext context) => AlertDialog(
+                                          title: const Text('Please Confirm'),
+                                          content: const Text('Are you sure you want to add this flight?', style: TextStyle(fontSize: 18)),
+                                          actions: <Widget>[
+                                            TextButton(
+                                                onPressed: (){
+                                                  setState(() {
+                                                    var newFlightId = _controller1.value.text;
+                                                    var newDepartureCity = _controller2.value.text;
+                                                    var newDestinationCity = _controller3.value.text;
+                                                    var newDepartureTime = _controller4.value.text;
+                                                    var newArrivalTime = _controller5.value.text;
+                                                    var flight = Flight(newFlightId, newDepartureCity, newDestinationCity, newDepartureTime, newArrivalTime);
 
-                                              // Save new flight to database
-                                              flightDao.addFlight(flight);
+                                                    // Save new flight to database
+                                                    flightDao.addFlight(flight);
 
-                                              // Save new flight to EncryptedSharedPreferences
-                                              _saveFlightToPreferences(flight);
+                                                    // Save new flight to EncryptedSharedPreferences
+                                                    _saveFlightToPreferences(flight);
 
-                                              // Save new flight to ListView
-                                              flightList.add(flight);
+                                                    // Save new flight to ListView
+                                                    flightList.add(flight);
 
-                                              _controller1.clear();
-                                              _controller2.clear();
-                                              _controller3.clear();
-                                              _controller4.clear();
-                                              _controller5.clear();
+                                                    _controller1.clear();
+                                                    _controller2.clear();
+                                                    _controller3.clear();
+                                                    _controller4.clear();
+                                                    _controller5.clear();
 
-                                              isCreatingFlight = false;
-                                            });
-                                            // Show SnackBar to inform user the new flight was added successfully
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text("Flight successfully added!"),
-                                              duration: Duration(seconds: 5),
-                                            ));
-                                            Navigator.pop(context);
-                                          },
-                                            child: const Text("YES", style: TextStyle(fontSize: 16))
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              isCreatingFlight = false;
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("NO", style: TextStyle(fontSize: 16))
-                                        )
-                                      ]
-                                    )
+                                                    isCreatingFlight = false;
+                                                  });
+                                                  // Show SnackBar to inform user the new flight was added successfully
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text("Flight successfully added!"),
+                                                        duration: Duration(seconds: 5),
+                                                      ));
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("Yes", style: TextStyle(fontSize: 16))
+                                            ),
+                                            TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isCreatingFlight = false;
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("No", style: TextStyle(fontSize: 16))
+                                            )
+                                          ]
+                                      )
                                   );}
-                                  else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: const Text("Please fill in all fields!"),
-                                          duration: const Duration(seconds: 10),
-                                          action: SnackBarAction(label: "OK", onPressed: () {})
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: const Text("Submit", style: TextStyle(fontSize: 16)),
+                                else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: const Text("Please fill in all fields!"),
+                                        duration: const Duration(seconds: 10),
+                                        action: SnackBarAction(label: "OK", onPressed: () {})
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text("Submit", style: TextStyle(fontSize: 16)),
                             ),
+                            const SizedBox(width: 20),
                             FilledButton(
                                 style: FilledButton.styleFrom(
-                                  minimumSize: const Size(160, 50),
+                                  minimumSize: const Size(150, 50),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero,
                                   ),
@@ -369,12 +370,12 @@ class FlightPageState extends State<FlightPage> {
                     child: Center(
                       child: Text(
                         "Details of the flight",
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black54),
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -400,7 +401,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -426,7 +427,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -452,7 +453,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -478,7 +479,7 @@ class FlightPageState extends State<FlightPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     child: Row(
                       children: [
                         const Flexible(
@@ -506,12 +507,12 @@ class FlightPageState extends State<FlightPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // The update button to update the information of the selected flight
                         FilledButton(
                           style: FilledButton.styleFrom(
-                            minimumSize: const Size(160, 50),
+                            minimumSize: const Size(150, 50),
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
                             ),
@@ -557,13 +558,13 @@ class FlightPageState extends State<FlightPage> {
                                             // Update the flight in the ListView
                                             int index = flightList.indexWhere((flight) => flight.flightId == selectedFlight!.flightId);
                                             if (index != -1) {
-                                            flightList[index] = selectedFlight!;
+                                              flightList[index] = selectedFlight!;
                                             }
                                           });
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(
-                                            content: Text("Flight successfully updated!"),
-                                            duration: Duration(seconds: 5),),
+                                              content: Text("Flight successfully updated!"),
+                                              duration: Duration(seconds: 5),),
                                           );
                                           Navigator.pop(context);
                                         },
@@ -588,58 +589,59 @@ class FlightPageState extends State<FlightPage> {
                           },
                           child: const Text("Update Flight", style: TextStyle(fontSize: 16)),
                         ),
+                        const SizedBox(width: 20),
                         // The delete button to remove the selected flight
                         FilledButton(
                             style: FilledButton.styleFrom(
-                              minimumSize: const Size(160, 50),
+                              minimumSize: const Size(150, 50),
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.zero,
                               ),
                             ),
                             onPressed: () {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                    title: const Text('Please Confirm'),
-                                    content: const Text('Are you sure you want to delete this flight?', style: TextStyle(fontSize: 18)),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text("Yes", style: TextStyle(fontSize: 16)),
-                                        onPressed: (){
-                                          setState(() {
-                                            // Remove the selected flight from database
-                                            flightDao.deleteFlight(selectedFlight!);
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                      title: const Text('Please Confirm'),
+                                      content: const Text('Are you sure you want to delete this flight?', style: TextStyle(fontSize: 18)),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text("Yes", style: TextStyle(fontSize: 16)),
+                                          onPressed: (){
+                                            setState(() {
+                                              // Remove the selected flight from database
+                                              flightDao.deleteFlight(selectedFlight!);
 
-                                            // Remove the selected flight from EncryptedSharedPreferences
-                                            flightPrefs.remove('Id_${selectedFlight!.flightId}');
-                                            flightPrefs.remove('Dep_${selectedFlight!.flightId}');
-                                            flightPrefs.remove('Dest_${selectedFlight!.flightId}');
-                                            flightPrefs.remove('ETD_${selectedFlight!.flightId}');
-                                            flightPrefs.remove('ETA_${selectedFlight!.flightId}');
+                                              // Remove the selected flight from EncryptedSharedPreferences
+                                              flightPrefs.remove('Id_${selectedFlight!.flightId}');
+                                              flightPrefs.remove('Dep_${selectedFlight!.flightId}');
+                                              flightPrefs.remove('Dest_${selectedFlight!.flightId}');
+                                              flightPrefs.remove('ETD_${selectedFlight!.flightId}');
+                                              flightPrefs.remove('ETA_${selectedFlight!.flightId}');
 
-                                            // Remove the selected flight from ListView
-                                            flightList.removeWhere((flight) => flight.flightId == selectedFlight!.flightId);
-                                            // Reset the selectedFlight to null
-                                            selectedFlight = null;
-                                          });
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text("Flight has been deleted"),
-                                              duration: Duration(seconds: 5),
-                                            ),
-                                          );
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: const Text("No", style: TextStyle(fontSize: 16)),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        }
-                                      )
-                                    ]
-                                )
-                            );},
+                                              // Remove the selected flight from ListView
+                                              flightList.removeWhere((flight) => flight.flightId == selectedFlight!.flightId);
+                                              // Reset the selectedFlight to null
+                                              selectedFlight = null;
+                                            });
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                content: Text("Flight has been deleted"),
+                                                duration: Duration(seconds: 5),
+                                              ),
+                                            );
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        TextButton(
+                                            child: const Text("No", style: TextStyle(fontSize: 16)),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            }
+                                        )
+                                      ]
+                                  )
+                              );},
                             child: const Text("Delete Flight", style: TextStyle(fontSize: 16))
                         ),
                       ],
@@ -670,11 +672,12 @@ class FlightPageState extends State<FlightPage> {
     // If user click on the 'Add Flight' button, the create page will appear
     if (isCreatingFlight) {
       return _createPage();
-    } else if ((width > height) && (width > 720)) {
-      // This is for the landscape model, flight list on the left side, details on the right side
+    }
+    // This is for the landscape model, flight list on the left side, details on the right side
+    if ((width > height) && (width > 720)) {
       return Row(children:[
-        Expanded(flex:2, child: _flightList()),
-        Expanded(flex:3, child: _detailsPage())
+        Expanded(flex:5, child: _flightList()),
+        Expanded(flex:4, child: _detailsPage())
       ]);
     }
     // This applies to portrait mode: display the details page once the user selects a flight from the list.
@@ -693,20 +696,28 @@ class FlightPageState extends State<FlightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            tooltip: 'Back to homepage',
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           actions: [
             Padding(
-                padding: const EdgeInsets.only(right: 5),
+                padding: const EdgeInsets.only(right: 10),
                 child:
                 TextButton(onPressed: () {
                   setState(() {
                     selectedFlight = null;
                   });
-                  },
+                },
                     style: TextButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 16),
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text("Back"))
+                    child: const Text("Back to List"))
             ),
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
