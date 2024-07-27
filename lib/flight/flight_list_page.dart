@@ -90,6 +90,10 @@ class FlightPageState extends State<FlightPage> {
     return Center(
       child: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 30),
+              child: Text("Current Flights", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+            ),
             // A header row
             Container(
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 10),
@@ -119,34 +123,34 @@ class FlightPageState extends State<FlightPage> {
             // Use Expanded to contain ListView in the Column container, so it can take as much space as possible
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
-                child:ListView.builder(
-                  itemCount: flightList.length,
-                  itemBuilder: (context, rowNum) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: GestureDetector(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(flex: 2, child: Text("$rowNum", style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex: 3, child: Text(flightList[rowNum].flightId, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex: 3, child: Text(flightList[rowNum].departureCity, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex: 3, child: Text(flightList[rowNum].destinationCity, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex: 2, child: Text(flightList[rowNum].departureTime, style: const TextStyle(fontSize: 15.0))),
-                            Expanded(flex: 2, child: Text(flightList[rowNum].arrivalTime, style: const TextStyle(fontSize: 15.0))),
-                          ],
+                  padding: const EdgeInsets.fromLTRB(20, 10, 0, 10),
+                  child:ListView.builder(
+                    itemCount: flightList.length,
+                    itemBuilder: (context, rowNum) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: GestureDetector(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(flex: 2, child: Text("${rowNum + 1}", style: const TextStyle(fontSize: 15.0))),
+                              Expanded(flex: 3, child: Text(flightList[rowNum].flightId, style: const TextStyle(fontSize: 15.0))),
+                              Expanded(flex: 3, child: Text(flightList[rowNum].departureCity, style: const TextStyle(fontSize: 15.0))),
+                              Expanded(flex: 3, child: Text(flightList[rowNum].destinationCity, style: const TextStyle(fontSize: 15.0))),
+                              Expanded(flex: 2, child: Text(flightList[rowNum].departureTime, style: const TextStyle(fontSize: 15.0))),
+                              Expanded(flex: 2, child: Text(flightList[rowNum].arrivalTime, style: const TextStyle(fontSize: 15.0))),
+                            ],
+                          ),
+                          onTap: () {
+                            selectedFlight = flightList[rowNum];
+                            setState(() {
+                              _detailsPage();
+                            });
+                          },
                         ),
-                        onTap: () {
-                          selectedFlight = flightList[rowNum];
-                          setState(() {
-                            _detailsPage();
-                          });
-                        },
-                      ),
-                    );
-                  },
-                )),
+                      );
+                    },
+                  )),
             ),
             // Button to display the flight creation page for users to enter new flight details
             SizedBox(
@@ -161,7 +165,7 @@ class FlightPageState extends State<FlightPage> {
                   setState(() {
                     isCreatingFlight = true;
                   });
-                  },
+                },
                 style: FilledButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
                   shape: const RoundedRectangleBorder(
