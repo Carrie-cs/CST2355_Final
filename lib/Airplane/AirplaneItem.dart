@@ -12,6 +12,7 @@ import 'package:floor/floor.dart';
 /// @author: WANG JIAYUN
 
 
+
 @entity
 class AirplaneItem{
 

@@ -13,6 +13,7 @@ import 'package:cst2335final/Airplane/AirplaneItem.dart';
 @dao
 abstract class AirplaneDAO {
 
+
   /// Inserts a new [AirplaneItem] into the database.
   ///
   /// [item] is the AirplaneItem to be inserted.
