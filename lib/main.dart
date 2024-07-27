@@ -2,14 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'AppLocalizations.dart';
-
-
-
-import 'CustomerList/CustomerPage.dart';
-
-
-import 'flight/flight_list_page.dart';
-
 import 'Airplane/AirplanePage.dart';
 
 
@@ -72,8 +64,7 @@ class _MyAppState extends State<MyApp>
       routes: {
         '/': (context) => const MyHomePage(title: 'Home Page'),
         '/AirplanePage': (context) { return  AirplanePage(); }, //Same as above =>
-        '/FlightPage': (context) { return const FlightPage();},
-        '/CustomerPage': (context) { return  CustomerPage(); }, //Same as above =>
+
       },
 
       theme: ThemeData(
@@ -128,18 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
-              child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
-            ),
+
             ElevatedButton(
               onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
               child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
             ),
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/FlightPage" );},
-              child:const Text("Flight List", style: TextStyle(color: Colors.blue)),
-            ),
+
 
           ],
         ),
