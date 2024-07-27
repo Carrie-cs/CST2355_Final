@@ -1,5 +1,6 @@
 
 
+
 {
   "Airplane": "Airplane",
   "Airplane_List": "Current Airplane List",
@@ -37,3 +38,4 @@
   "How_update_Airplane_detail": "You can tap the Airplane list (e.g.: Airplane Type 1: XXX) to see details of each item, and a detailed page will show in the screen. Update any information you need, and then click the 'Update' button to update the Airplane.",
   "How_delete_Airplane_detail": "You can tap the Airplane list (e.g.: Airplane Type 1: XXX) to see details of each item, and a detailed page will show in the screen. and then click the 'Delete' button to delete the Airplane."
 }
+

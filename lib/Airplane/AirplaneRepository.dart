@@ -39,6 +39,7 @@ class AirplaneRepository{
     await storedDataEncrypted.setString("flyDistance", flyDistance) ;
   }
 
+
   /// Loads the airplane data from EncryptedSharedPreferences.
   ///
   /// This method retrieves the values of the type, numOfPassenger, maxSpeed,

@@ -2,7 +2,6 @@
 
 
 
-
 import 'package:floor/floor.dart';
 import 'package:cst2335final/Airplane/AirplaneItem.dart';
 
@@ -13,6 +12,7 @@ import 'package:cst2335final/Airplane/AirplaneItem.dart';
 /// on the AirplaneItem table in the database.
 @dao
 abstract class AirplaneDAO {
+
 
   /// Inserts a new [AirplaneItem] into the database.
   ///
