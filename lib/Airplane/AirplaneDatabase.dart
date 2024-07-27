@@ -9,7 +9,6 @@ import 'package:cst2335final/Airplane/AirplaneItem.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 part 'AirplaneDatabase.g.dart'; // the generated code will be there
 
-
 /// This is the AirplaneDatabase class.
 ///
 /// This class represents the database for the application. It uses the Floor
