@@ -110,89 +110,89 @@ class AirplanePageState extends State<AirplanePage> {
       backgroundColor: Colors.deepPurple[50]?.withOpacity(0.5),
 
       // Center the content of the Scaffold
-       body: Center(
-        child: Column( mainAxisAlignment: MainAxisAlignment.center, children:<Widget>[
-          // Add some space at the top
-          const SizedBox(height: 90),
-          // Display the title of the page
-          Text(AppLocalizations.of(context)!.translate('Airplane_List')!, style: TextStyle(fontSize: 24, color: Colors.purple, fontWeight: FontWeight.bold, ),),
-         // Add some space below the title
-          const SizedBox(height: 20),
+      body: Center(
+          child: Column( mainAxisAlignment: MainAxisAlignment.center, children:<Widget>[
+            // Add some space at the top
+            const SizedBox(height: 90),
+            // Display the title of the page
+            Text(AppLocalizations.of(context)!.translate('Airplane_List')!, style: TextStyle(fontSize: 24, color: Colors.purple, fontWeight: FontWeight.bold, ),),
+            // Add some space below the title
+            const SizedBox(height: 20),
 
-          // Expanded widget to fill available space
-             Expanded(
+            // Expanded widget to fill available space
+            Expanded(
                 child: airplane.isEmpty
                 // Display this when the list is empty
-              ?
-                 Align(
-                 alignment: Alignment.center,
-                   child: Padding(
+                    ?
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
                     padding: EdgeInsets.only(top: 20.0), // Add some padding at the top
-                     child: Text(AppLocalizations.of(context)!.translate('Airplane_no_list')!, style: TextStyle(fontSize: 18, color: Colors.indigoAccent,),),
-            ),
-          )
+                    child: Text(AppLocalizations.of(context)!.translate('Airplane_no_list')!, style: TextStyle(fontSize: 18, color: Colors.indigoAccent,),),
+                  ),
+                )
 
                 // Display the ListView when it has some items
-                 : ListView.builder(
+                    : ListView.builder(
                     itemCount: airplane.length,
                     itemBuilder: (context, rowNum) {
                       return  Padding(padding: const EdgeInsets.symmetric(vertical: 4.0), // Add vertical padding
                           child:  GestureDetector(child:
-                           Row(mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Display the label for airplane type
-                              Text(AppLocalizations.of(context)!.translate('Airplane_Type')!, style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                              // Display the row number
-                              Text("${rowNum+1}: ", style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                              // Display the airplane type
-                              Text( airplane[rowNum].type, style: TextStyle(fontSize: 18, color: Colors.purple ),),
-                      ]
-                  ),
-                     // Handle tap event
-                      onTap: () {
-                        setState(() {
-                          addItem = "";
-                          selectedItem = airplane[rowNum];
+                          Row(mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // Display the label for airplane type
+                                Text(AppLocalizations.of(context)!.translate('Airplane_Type')!, style: TextStyle(fontSize: 18, color: Colors.purple ),),
+                                // Display the row number
+                                Text("${rowNum+1}: ", style: TextStyle(fontSize: 18, color: Colors.purple ),),
+                                // Display the airplane type
+                                Text( airplane[rowNum].type, style: TextStyle(fontSize: 18, color: Colors.purple ),),
+                              ]
+                          ),
+                              // Handle tap event
+                              onTap: () {
+                                setState(() {
+                                  addItem = "";
+                                  selectedItem = airplane[rowNum];
 
-                          // Load the data stored in the database
-                              _controllerType.text = selectedItem!.type;
-                              _controllerNumOfPassenger.text = selectedItem!.numOfPassenger.toString();
-                              _controllerMaxSpeed.text =  selectedItem!.maxSpeed.toString();
-                              _controllerFlyDistance.text =  selectedItem!.flyDistance.toString();
+                                  // Load the data stored in the database
+                                  _controllerType.text = selectedItem!.type;
+                                  _controllerNumOfPassenger.text = selectedItem!.numOfPassenger.toString();
+                                  _controllerMaxSpeed.text =  selectedItem!.maxSpeed.toString();
+                                  _controllerFlyDistance.text =  selectedItem!.flyDistance.toString();
 
+                                });
+                              } // on Tap
+                          )
+                      );
+                    }
+                )
+            ),
+
+            // Container for the Add Airplane button
+            Container(
+              padding: EdgeInsets.all(30),
+              child: Row( mainAxisAlignment: MainAxisAlignment.center, children:[
+                // Add Airplane button
+                ElevatedButton( child: Text(AppLocalizations.of(context)!.translate('Add_Airplane')!,  style: TextStyle(fontSize: 15, color:Colors.purple, fontWeight: FontWeight.bold, ) ),
+                    onPressed: () {
+                      setState(() {
+                        selectedItem = null;
+                        addItem = "yes";
+                        // load the data stored in repository
+                        AirplaneRepository.loadData().then((_) {
+                          _controllerType.text = AirplaneRepository.type;
+                          _controllerNumOfPassenger.text = AirplaneRepository.numOfPassenger;
+                          _controllerMaxSpeed.text = AirplaneRepository.maxSpeed;
+                          _controllerFlyDistance.text = AirplaneRepository.flyDistance;
                         });
-                      } // on Tap
-                  )
-                );
-              }
+                      });
+                    } ),
+              ]),
+            ),
+          ],
           )
-       ),
-
-          // Container for the Add Airplane button
-           Container(
-             padding: EdgeInsets.all(30),
-             child: Row( mainAxisAlignment: MainAxisAlignment.center, children:[
-               // Add Airplane button
-               ElevatedButton( child: Text(AppLocalizations.of(context)!.translate('Add_Airplane')!,  style: TextStyle(fontSize: 15, color:Colors.purple, fontWeight: FontWeight.bold, ) ),
-                onPressed: () {
-                  setState(() {
-                    selectedItem = null;
-                    addItem = "yes";
-                    // load the data stored in repository
-                    AirplaneRepository.loadData().then((_) {
-                      _controllerType.text = AirplaneRepository.type;
-                      _controllerNumOfPassenger.text = AirplaneRepository.numOfPassenger;
-                      _controllerMaxSpeed.text = AirplaneRepository.maxSpeed;
-                      _controllerFlyDistance.text = AirplaneRepository.flyDistance;
-                    });
-                  });
-                } ),
-          ]),
-           ),
-       ],
-       )
-       ),
-      );
+      ),
+    );
   }
 
 
@@ -213,8 +213,8 @@ class AirplanePageState extends State<AirplanePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-          // Display the title of the page
-             Text(AppLocalizations.of(context)!.translate('Add_New_Airplane')!, style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
+            // Display the title of the page
+            Text(AppLocalizations.of(context)!.translate('Add_New_Airplane')!, style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
             // Add some space below the title
             const SizedBox(height: 40),
 
@@ -222,18 +222,18 @@ class AirplanePageState extends State<AirplanePage> {
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerType,
                 decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: AppLocalizations.of(context)!.translate('Airplane_Type')!,
+                  hintText:"Type here",
+                  border: OutlineInputBorder(),
+                  labelText: AppLocalizations.of(context)!.translate('Airplane_Type')!,
                 ))),
 
-           // TextField for number of passengers
+            // TextField for number of passengers
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerNumOfPassenger,
                 decoration: InputDecoration(
-                    hintText:"Type here",
-                    border: OutlineInputBorder(),
-                    labelText: AppLocalizations.of(context)!.translate('Airplane_Number_Of_Passenger')!,
+                  hintText:"Type here",
+                  border: OutlineInputBorder(),
+                  labelText: AppLocalizations.of(context)!.translate('Airplane_Number_Of_Passenger')!,
                 ))),
 
             // TextField for maximum speed
@@ -274,15 +274,15 @@ class AirplanePageState extends State<AirplanePage> {
                         },
                       ),
                       TextButton(
-                        child: Text(AppLocalizations.of(context)!.translate('Yes')!),
-                        onPressed: buttonClicked
+                          child: Text(AppLocalizations.of(context)!.translate('Yes')!),
+                          onPressed: buttonClicked
                       ),
                     ],
                   );
                 },
               );
             },
-                child:  Text(AppLocalizations.of(context)!.translate('Submit_New_Airplane')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),  ),
+              child:  Text(AppLocalizations.of(context)!.translate('Submit_New_Airplane')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),  ),
           ],
         ),
       ),
@@ -317,66 +317,66 @@ class AirplanePageState extends State<AirplanePage> {
   /// and updates the UI accordingly.
   void buttonClicked() async {
     // Check if all fields are filled
-   if (validateFields()) {
-     //store the data in repository
-     AirplaneRepository.type = _controllerType.value.text;
-     AirplaneRepository.numOfPassenger = _controllerNumOfPassenger.value.text;
-     AirplaneRepository.maxSpeed = _controllerMaxSpeed.value.text;
-     AirplaneRepository.flyDistance = _controllerFlyDistance.value.text;
-     await AirplaneRepository.saveData();
-     // Parse the data
-     var inputType = _controllerType.value.text;
-     var inputNumOfPassenger = _controllerNumOfPassenger.value.text;
-     var  numberOfPassengers = int.parse(inputNumOfPassenger); // Convert to an int to perform numeric operations
-     var inputMaxSpeed =  _controllerMaxSpeed.value.text;
-     var maxSpeed = double.parse(inputMaxSpeed); // Convert to an int to perform numeric operations
-     var inputFlyDistance =  _controllerFlyDistance.value.text;
-     var flyDistance = double.parse(inputFlyDistance); // Convert to an int to perform numeric operations
+    if (validateFields()) {
+      //store the data in repository
+      AirplaneRepository.type = _controllerType.value.text;
+      AirplaneRepository.numOfPassenger = _controllerNumOfPassenger.value.text;
+      AirplaneRepository.maxSpeed = _controllerMaxSpeed.value.text;
+      AirplaneRepository.flyDistance = _controllerFlyDistance.value.text;
+      await AirplaneRepository.saveData();
+      // Parse the data
+      var inputType = _controllerType.value.text;
+      var inputNumOfPassenger = _controllerNumOfPassenger.value.text;
+      var  numberOfPassengers = int.parse(inputNumOfPassenger); // Convert to an int to perform numeric operations
+      var inputMaxSpeed =  _controllerMaxSpeed.value.text;
+      var maxSpeed = double.parse(inputMaxSpeed); // Convert to an int to perform numeric operations
+      var inputFlyDistance =  _controllerFlyDistance.value.text;
+      var flyDistance = double.parse(inputFlyDistance); // Convert to an int to perform numeric operations
 
-     setState(() {
-       // Insert the new airplane into the database
-       var newItem = AirplaneItem(AirplaneItem.ID++, inputType, numberOfPassengers, maxSpeed, flyDistance);
-       myDAO.insertAirplane(newItem);
-       // Add the new airplane to the list
-       airplane.add(newItem);
-     });
+      setState(() {
+        // Insert the new airplane into the database
+        var newItem = AirplaneItem(AirplaneItem.ID++, inputType, numberOfPassengers, maxSpeed, flyDistance);
+        myDAO.insertAirplane(newItem);
+        // Add the new airplane to the list
+        airplane.add(newItem);
+      });
 
-    // clear the text field
-    _controllerType.text = "";
-    _controllerNumOfPassenger.text = "";
-    _controllerMaxSpeed.text = "";
-    _controllerFlyDistance.text = "";
-    addItem = "";
-     // Close the current page
-    Navigator.of(context).pop();
-     // Show a snackbar to indicate that the new airplane has been added
-    var snackBar = SnackBar(
-      content: Text(AppLocalizations.of(context)!.translate('New_Airplane_Added')!),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+      // clear the text field
+      _controllerType.text = "";
+      _controllerNumOfPassenger.text = "";
+      _controllerMaxSpeed.text = "";
+      _controllerFlyDistance.text = "";
+      addItem = "";
+      // Close the current page
+      Navigator.of(context).pop();
+      // Show a snackbar to indicate that the new airplane has been added
+      var snackBar = SnackBar(
+        content: Text(AppLocalizations.of(context)!.translate('New_Airplane_Added')!),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
 
-   else
-  {
-    // One or more fields are empty, show a dialog box
-     showDialog(
-       context: context,
-       builder: (BuildContext context) {
-         return AlertDialog(
-           title: Text(AppLocalizations.of(context)!.translate('Error')!),
-           content: Text(AppLocalizations.of(context)!.translate('Airplane_fields_required')!),
-           actions: <Widget>[
-             TextButton(
-               child: Text(AppLocalizations.of(context)!.translate('Got_it')!),
-               onPressed: () {
-                 Navigator.of(context).pop(); // Close the dialog
-               },
-             ),
-           ],
-         );
-       },
-     );
-   }
+    else
+    {
+      // One or more fields are empty, show a dialog box
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!.translate('Error')!),
+            content: Text(AppLocalizations.of(context)!.translate('Airplane_fields_required')!),
+            actions: <Widget>[
+              TextButton(
+                child: Text(AppLocalizations.of(context)!.translate('Got_it')!),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
 
@@ -393,132 +393,132 @@ class AirplanePageState extends State<AirplanePage> {
     }
     else {
       return Scaffold(
-        backgroundColor: Colors.purple[50]?.withOpacity(0.5),
-        body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-            // Display the details of the airplane
-            Text(AppLocalizations.of(context)!.translate('Details_of_Airplane')!, style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
-          const SizedBox(height: 40),
+          backgroundColor: Colors.purple[50]?.withOpacity(0.5),
+          body: Center(
+              child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // Display the details of the airplane
+                  Text(AppLocalizations.of(context)!.translate('Details_of_Airplane')!, style: TextStyle(fontSize: 24, color: Colors.deepPurple, fontWeight: FontWeight.bold, ),),
+                  const SizedBox(height: 40),
 
-          // TextField for Airplane Type
-          Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
-          TextField(controller: _controllerType,
-              decoration: InputDecoration(
-                  hintText:"Type here",
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.translate('Airplane_Type')!,
-              ))),
+                  // TextField for Airplane Type
+                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
+                  TextField(controller: _controllerType,
+                      decoration: InputDecoration(
+                        hintText:"Type here",
+                        border: OutlineInputBorder(),
+                        labelText: AppLocalizations.of(context)!.translate('Airplane_Type')!,
+                      ))),
 
-          // TextField for Number of Passengers
-          Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
-          TextField(controller: _controllerNumOfPassenger,
-              decoration: InputDecoration(
-                  hintText:"Type here",
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.translate('Airplane_Number_Of_Passenger')!
-              ))),
+                  // TextField for Number of Passengers
+                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
+                  TextField(controller: _controllerNumOfPassenger,
+                      decoration: InputDecoration(
+                          hintText:"Type here",
+                          border: OutlineInputBorder(),
+                          labelText: AppLocalizations.of(context)!.translate('Airplane_Number_Of_Passenger')!
+                      ))),
 
-          // TextField for Maximum Speed
-          Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
-          TextField(controller: _controllerMaxSpeed,
-              decoration: InputDecoration(
-                  hintText:"Type here",
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.translate('Airplane_Max_Speed')!
-              ))),
+                  // TextField for Maximum Speed
+                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
+                  TextField(controller: _controllerMaxSpeed,
+                      decoration: InputDecoration(
+                          hintText:"Type here",
+                          border: OutlineInputBorder(),
+                          labelText: AppLocalizations.of(context)!.translate('Airplane_Max_Speed')!
+                      ))),
 
-          // TextField for Flying Distance
-          Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
-          TextField(controller: _controllerFlyDistance,
-              decoration: InputDecoration(
-                  hintText:"Type here",
-                  border: OutlineInputBorder(),
-                  labelText: AppLocalizations.of(context)!.translate('Airplane_Fly_Distance')!
-              ))),
+                  // TextField for Flying Distance
+                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
+                  TextField(controller: _controllerFlyDistance,
+                      decoration: InputDecoration(
+                          hintText:"Type here",
+                          border: OutlineInputBorder(),
+                          labelText: AppLocalizations.of(context)!.translate('Airplane_Fly_Distance')!
+                      ))),
 
-          const SizedBox(height: 50),
+                  const SizedBox(height: 50),
 
-          // Row for Update and Delete buttons
-          Row(mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Update button
-                ElevatedButton( onPressed: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.translate('Update_Airplane')!),
-                        content: Text(AppLocalizations.of(context)!.translate('Want_update_airplane')!),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(AppLocalizations.of(context)!.translate('No')!),
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                          ),
-                          TextButton(
-                              child: Text(AppLocalizations.of(context)!.translate('Yes')!),
-                              onPressed: updateClicked
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }, child:  Text(AppLocalizations.of(context)!.translate('Update')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, ))  ),
-
-                SizedBox(width: 20),
-
-                // Delete button
-                ElevatedButton(onPressed: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.translate('Delete')!),
-                        content: Text(AppLocalizations.of(context)!.translate('Want_delete_airplane')!),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(AppLocalizations.of(context)!.translate('No')!),
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                          ),
-                          TextButton(
-                            child: Text(AppLocalizations.of(context)!.translate('Yes')!),
-                            onPressed: () {
-                              setState(() {
-                                // delete from the database first, then delete the list
-                                myDAO.deleteAirplane(selectedItem!).then((_) {
-                                  // Once the item is deleted from the database,  delete the list
-                                  setState(() {
-                                    // Remove the item from the list
-                                    airplane.removeWhere((item) => item.id == selectedItem!.id);
-                                    // Reset selectedItem to null
-                                    selectedItem = null;
-                                  });
-                                });
-                              });
-                              Navigator.of(context).pop(); // Close the dialog
-
-                              // show a snackbar if the delete the item
-                              var snackBar = SnackBar(
-                                content: Text(AppLocalizations.of(context)!.translate('Airplane_deleted')!),
+                  // Row for Update and Delete buttons
+                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Update button
+                        ElevatedButton( onPressed: (){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(AppLocalizations.of(context)!.translate('Update_Airplane')!),
+                                content: Text(AppLocalizations.of(context)!.translate('Want_update_airplane')!),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text(AppLocalizations.of(context)!.translate('No')!),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(); // Close the dialog
+                                    },
+                                  ),
+                                  TextButton(
+                                      child: Text(AppLocalizations.of(context)!.translate('Yes')!),
+                                      onPressed: updateClicked
+                                  ),
+                                ],
                               );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
                             },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }, child:  Text(AppLocalizations.of(context)!.translate('Delete')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )))
-              ]
-          ),
-      ],
-      )
-    )
+                          );
+                        }, child:  Text(AppLocalizations.of(context)!.translate('Update')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, ))  ),
+
+                        SizedBox(width: 20),
+
+                        // Delete button
+                        ElevatedButton(onPressed: (){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(AppLocalizations.of(context)!.translate('Delete')!),
+                                content: Text(AppLocalizations.of(context)!.translate('Want_delete_airplane')!),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text(AppLocalizations.of(context)!.translate('No')!),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(); // Close the dialog
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text(AppLocalizations.of(context)!.translate('Yes')!),
+                                    onPressed: () {
+                                      setState(() {
+                                        // delete from the database first, then delete the list
+                                        myDAO.deleteAirplane(selectedItem!).then((_) {
+                                          // Once the item is deleted from the database,  delete the list
+                                          setState(() {
+                                            // Remove the item from the list
+                                            airplane.removeWhere((item) => item.id == selectedItem!.id);
+                                            // Reset selectedItem to null
+                                            selectedItem = null;
+                                          });
+                                        });
+                                      });
+                                      Navigator.of(context).pop(); // Close the dialog
+
+                                      // show a snackbar if the delete the item
+                                      var snackBar = SnackBar(
+                                        content: Text(AppLocalizations.of(context)!.translate('Airplane_deleted')!),
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }, child:  Text(AppLocalizations.of(context)!.translate('Delete')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )))
+                      ]
+                  ),
+                ],
+              )
+          )
       );
     }
   }
@@ -561,7 +561,7 @@ class AirplanePageState extends State<AirplanePage> {
 
 
 
-/// Widget to handle responsive layout
+  /// Widget to handle responsive layout
   Widget ResponsiveLayout(){
     // Get the size of the screen
     var size = MediaQuery.of(context).size;
@@ -604,7 +604,7 @@ class AirplanePageState extends State<AirplanePage> {
 
 
 
-/// Function to show custom dialog based on the selected value
+  /// Function to show custom dialog based on the selected value
   void showCustomDialog(BuildContext context, String value) {
     String dialogTitle;
     Widget dialogContent;
@@ -670,7 +670,7 @@ class AirplanePageState extends State<AirplanePage> {
                 selectedItem = null;
               });
             },
-                child:Text(AppLocalizations.of(context)!.translate('Clear')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),
+              child:Text(AppLocalizations.of(context)!.translate('Clear')!, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, )),
             ),
             SizedBox(width: 20),
 
@@ -689,11 +689,11 @@ class AirplanePageState extends State<AirplanePage> {
                   value: 'Add',
                   child: Text(AppLocalizations.of(context)!.translate('How_add_Airplane')!),
                 ),
-                 PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'Update',
                   child: Text(AppLocalizations.of(context)!.translate('How_update_Airplane')!),
                 ),
-                 PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'Delete',
                   child: Text(AppLocalizations.of(context)!.translate('How_delete_Airplane')!),
                 ),
