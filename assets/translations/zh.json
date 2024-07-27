@@ -1,5 +1,6 @@
 
 {
+  "Airplane": "机型",
   "Airplane_List": "机型列表",
   "Add_Airplane": "添加机型",
   "Add_New_Airplane": "新机型",
@@ -11,7 +12,11 @@
   "Details_of_Airplane": "机型信息",
   "Update_Airplane": "更新机型",
   "Update": "更新",
+  "Want_update_airplane": "你确定更新机型信息吗？",
+  "Airplane_updated": "机型信息已经更新！",
   "Delete": "删除",
+  "Want_delete_airplane": "你确定删除机型信息吗？",
+  "Airplane_deleted": "机型信息已经删除！",
   "Help": "帮助",
   "Clear": "清除",
   "Airplane_no_list": "暂无机型列表",
