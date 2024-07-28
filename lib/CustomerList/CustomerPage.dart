@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:cst2335final/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import '../AppLocalizations.dart';
 import 'CustomerDAO.dart';
 import 'CustomersDatabase.dart';
 import 'Customers.dart';
@@ -87,8 +89,7 @@ class CustomerPageState extends State<CustomerPage> {
       showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
-          title: const Text('Do you want to start with a blank page or '
-              'copy the fields from the previous customer?'),
+          title: Text(AppLocalizations.of(context)!.translate('prompt_user_choice')!),
           actions: <Widget>[
             ElevatedButton(
               onPressed: () {
@@ -106,7 +107,8 @@ class CustomerPageState extends State<CustomerPage> {
                 });
                 Navigator.pop(context);
               },
-              child: const Text("Copy the fields",style: TextStyle(color: Colors.green)),
+              child: Text(AppLocalizations.of(context)!.translate('copy_fields')!
+                  ,style: TextStyle(color: Colors.green)),
             ),
             ElevatedButton(
               onPressed: () {
@@ -124,7 +126,8 @@ class CustomerPageState extends State<CustomerPage> {
 
                 Navigator.pop(context);
               },
-              child: const Text("Start with a blank page",style: TextStyle(color: Colors.green)),
+              child: Text(AppLocalizations.of(context)!.translate('blank_page')!,
+                  style: TextStyle(color: Colors.green)),
             ),
           ],
         ),
@@ -142,7 +145,8 @@ class CustomerPageState extends State<CustomerPage> {
           child: Column( mainAxisAlignment: MainAxisAlignment.center, children:<Widget>[
             const SizedBox(height: 90),
 
-            Text("Current Customer List: ", style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
+            Text(AppLocalizations.of(context)!.translate('current_customer_list')!,
+              style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
 
             const SizedBox(height: 20),
 
@@ -151,11 +155,12 @@ class CustomerPageState extends State<CustomerPage> {
                 child: customer.isEmpty
                 // Display this when list is empty
                     ?
-                const Align(
+                 Align(
                   alignment: Alignment.center,
                   child: Padding(
                     padding: EdgeInsets.only(top: 1.0), // Add some padding at the top
-                    child: Text('There are no items in the list', style: TextStyle(fontSize: 18, color: Colors.green,),),
+                    child: Text(AppLocalizations.of(context)!.translate('no_items')!,
+                      style: TextStyle(fontSize: 18, color: Colors.green,),),
                   ),
                 )
 
@@ -196,7 +201,8 @@ class CustomerPageState extends State<CustomerPage> {
             Container(
               padding: EdgeInsets.all(30),
               child: Row( mainAxisAlignment: MainAxisAlignment.center, children:[
-                ElevatedButton( child: Text("Add Customer",  style: TextStyle(fontSize: 15, color:Colors.green, fontWeight: FontWeight.bold, ) ),
+                ElevatedButton( child: Text(AppLocalizations.of(context)!.translate('add_customer')!,
+                    style: TextStyle(fontSize: 15, color:Colors.green, fontWeight: FontWeight.bold, ) ),
               onPressed: chooseBlockOrCopy,)]),
             ),
 
@@ -217,16 +223,17 @@ class CustomerPageState extends State<CustomerPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("Add New Customer: ", style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
+            Text(AppLocalizations.of(context)!.translate('add_new_customer')!,
+              style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
 
             const SizedBox(height: 40),
 
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerFirstName,
                 decoration: InputDecoration(
-                    hintText:"Type here",
+                    hintText:AppLocalizations.of(context)!.translate('type_here')!,
                     border: OutlineInputBorder(),
-                    labelText: "Customer First Name",
+                    labelText:AppLocalizations.of(context)!.translate('customer_first_name')! ,
                 ),
               enableInteractiveSelection: false,
             )),
@@ -234,9 +241,9 @@ class CustomerPageState extends State<CustomerPage> {
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerLastName,
                 decoration: InputDecoration(
-                    hintText:"Type here",
+                    hintText:AppLocalizations.of(context)!.translate('type_here')!,
                     border: OutlineInputBorder(),
-                    labelText: "Customer Last Name"
+                    labelText: AppLocalizations.of(context)!.translate('customer_last_name')!,
                 ),
               enableInteractiveSelection: false,)),
 
@@ -244,9 +251,9 @@ class CustomerPageState extends State<CustomerPage> {
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerAddress,
                 decoration: InputDecoration(
-                    hintText:"Type here",
+                    hintText:AppLocalizations.of(context)!.translate('type_here')!,
                     border: OutlineInputBorder(),
-                    labelText: "Customer Address"
+                    labelText: AppLocalizations.of(context)!.translate('customer_address')!,
                 ),
               enableInteractiveSelection: false,)),
 
@@ -254,9 +261,9 @@ class CustomerPageState extends State<CustomerPage> {
             Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
             TextField(controller: _controllerBirthday,
                 decoration: InputDecoration(
-                    hintText:"Select Birthday",
+                    hintText:AppLocalizations.of(context)!.translate('select_birthday')!,
                     border: OutlineInputBorder(),
-                    labelText: "Customer Birthday",
+                    labelText: AppLocalizations.of(context)!.translate('customer_birthday')!,
                   suffixIcon:IconButton(
                     icon: Icon(Icons.calendar_today),
                     onPressed: () => _selectDate(context),
@@ -275,17 +282,17 @@ class CustomerPageState extends State<CustomerPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Add Customer Info'),
-                    content: Text('Do you want to add this customer info?'),
+                    title: Text(AppLocalizations.of(context)!.translate('add_customer_info')!,),
+                    content: Text(AppLocalizations.of(context)!.translate('ask_add_customer_info')!),
                     actions: <Widget>[
                       TextButton(
-                        child: Text('No'),
+                        child: Text(AppLocalizations.of(context)!.translate('No')!),
                         onPressed: () {
                           Navigator.of(context).pop(); // Close the dialog
                         },
                       ),
                       TextButton(
-                          child: Text('Yes'),
+                          child: Text(AppLocalizations.of(context)!.translate('Yes')!),
                           onPressed: buttonClicked
                       ),
                     ],
@@ -293,7 +300,8 @@ class CustomerPageState extends State<CustomerPage> {
                 },
               );
             },
-              child:  Text("Submit", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )),  ),
+              child:  Text(AppLocalizations.of(context)!.translate('submit')!,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )),  ),
 
           ],
         ),
@@ -356,9 +364,9 @@ class CustomerPageState extends State<CustomerPage> {
 
       Navigator.of(context).pop();
 
-      // show a snackbar if the delete the item
+      // show a snack bar if the delete the item
       var snackBar = SnackBar(
-        content: Text('Customer info successfully added!'),
+        content: Text(AppLocalizations.of(context)!.translate('customer_added_success')!),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
@@ -370,11 +378,11 @@ class CustomerPageState extends State<CustomerPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Please fill in all customer fields.'),
+            title: Text(AppLocalizations.of(context)!.translate('Error')!),
+            content: Text(AppLocalizations.of(context)!.translate('fill_customer_fields')!),
             actions: <Widget>[
               TextButton(
-                child: Text('Got it!'),
+                child: Text(AppLocalizations.of(context)!.translate('Got_it')!),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                 },
@@ -401,7 +409,7 @@ class CustomerPageState extends State<CustomerPage> {
               child: Column(mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 
-                  Text("Details of Customers ",
+                  Text(AppLocalizations.of(context)!.translate('customer_details')!,
                     style: TextStyle(fontSize: 24, color: Colors.green, fontWeight: FontWeight.bold, ),),
 
                   const SizedBox(height: 40),
@@ -410,34 +418,34 @@ class CustomerPageState extends State<CustomerPage> {
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerFirstName,
                       decoration: InputDecoration(
-                        hintText:"Type here",
+                        hintText:AppLocalizations.of(context)!.translate('type_here')!,
                         border: OutlineInputBorder(),
-                        labelText: "Customer First Name",
+                        labelText: AppLocalizations.of(context)!.translate('customer_first_name')!,
                       ))),
 
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerLastName,
                       decoration: InputDecoration(
-                          hintText:"Type here",
+                          hintText:AppLocalizations.of(context)!.translate('type_here')!,
                           border: OutlineInputBorder(),
-                          labelText: "Customer Last Name"
+                          labelText: AppLocalizations.of(context)!.translate('customer_last_name')!
                       ))),
 
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerAddress,
                       decoration: InputDecoration(
-                          hintText:"Type here",
+                          hintText:AppLocalizations.of(context)!.translate('type_here')!,
                           border: OutlineInputBorder(),
-                          labelText: "Customer Address"
+                          labelText: AppLocalizations.of(context)!.translate('customer_address')!
                       ))),
 
 
                   Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10), child:
                   TextField(controller: _controllerBirthday,
                     decoration: InputDecoration(
-                      hintText:"Select Birthday",
+                      hintText:AppLocalizations.of(context)!.translate('select_birthday')!,
                       border: OutlineInputBorder(),
-                      labelText: "Customer Birthday",
+                      labelText: AppLocalizations.of(context)!.translate('customer_birthday')!,
                       suffixIcon:IconButton(
                         icon: Icon(Icons.calendar_today),
                         onPressed: () => _selectDate(context),
@@ -459,24 +467,25 @@ class CustomerPageState extends State<CustomerPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Update'),
-                                content: Text("Do you want to update this customer's information?"),
+                                title: Text(AppLocalizations.of(context)!.translate('Update')!),
+                                content: Text(AppLocalizations.of(context)!.translate('ask_update_customer')!),
                                 actions: <Widget>[
                                   TextButton(
-                                    child: Text('No'),
+                                    child: Text(AppLocalizations.of(context)!.translate('No')!),
                                     onPressed: () {
                                       Navigator.of(context).pop(); // Close the dialog
                                     },
                                   ),
                                   TextButton(
-                                      child: Text('Yes'),
+                                      child: Text(AppLocalizations.of(context)!.translate('Yes')!),
                                       onPressed: updateClicked
                                   ),
                                 ],
                               );
                             },
                           );
-                        }, child:  Text("Update", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green ))  ),
+                        }, child:  Text(AppLocalizations.of(context)!.translate('Update')!,
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green ))  ),
 
                         SizedBox(width: 20),
 
@@ -485,17 +494,17 @@ class CustomerPageState extends State<CustomerPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Delete'),
-                                content: Text("Do you want to delete this customer's information?"),
+                                title: Text(AppLocalizations.of(context)!.translate('Delete')!),
+                                content: Text(AppLocalizations.of(context)!.translate('ask_delete_customer')!),
                                 actions: <Widget>[
                                   TextButton(
-                                    child: Text('No'),
+                                    child: Text(AppLocalizations.of(context)!.translate('No')!),
                                     onPressed: () {
                                       Navigator.of(context).pop(); // Close the dialog
                                     },
                                   ),
                                   TextButton(
-                                    child: Text('Yes'),
+                                    child: Text(AppLocalizations.of(context)!.translate('Yes')!),
                                     onPressed: () {
                                       setState(() {
                                         // delete from the database first, then delete the list
@@ -510,9 +519,9 @@ class CustomerPageState extends State<CustomerPage> {
                                         });
                                       });
                                       Navigator.of(context).pop(); // Close the dialog
-                                      // show a snackbar if the delete the item
+                                      // show a snack bar if the delete the item
                                       var snackBar = SnackBar(
-                                        content: Text('Successfully deleted!'),
+                                        content: Text(AppLocalizations.of(context)!.translate('delete_customer_success')!),
                                       );
                                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                     },
@@ -521,7 +530,8 @@ class CustomerPageState extends State<CustomerPage> {
                               );
                             },
                           );
-                        }, child:  Text("Delete", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )))
+                        }, child:  Text(AppLocalizations.of(context)!.translate('Delete')!,
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )))
                       ]
                   ),
                 ],
@@ -560,9 +570,9 @@ class CustomerPageState extends State<CustomerPage> {
 
     Navigator.of(context).pop();
 
-    // show a snackbar if the delete the item
+    // show a snack bar if the delete the item
     var snackBar = SnackBar(
-      content: Text('Successfully Updated!'),
+      content: Text(AppLocalizations.of(context)!.translate('update_customer_success')!),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
@@ -620,25 +630,20 @@ class CustomerPageState extends State<CustomerPage> {
 
     switch (value) {
       case 'View':
-        dialogTitle = 'How to view the Customer List?';
-        dialogContent = Text('The Customer List would show the whole screen on the Phone, but on a Tablet or Desktop screen, '
-            'it would show the List on the left screen.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_view_customer_list')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('view_customer_list')!);
         break;
       case 'Add':
-        dialogTitle = 'How to add new Customer?';
-        dialogContent = Text('You can click the button: "Add" in the bottom, a add page will show in the screen, '
-            'you can add new Customer with information of: first name, last name, address, '
-            'and birthday. And click the "Submit" button to add it.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_add_customer_list')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('add_customer_list')!);
         break;
       case 'Update':
-        dialogTitle = 'How to update the Customer?';
-        dialogContent = Text('You can tap the Customer list to see details of each customer, and a detailed page will show in the screen. '
-            'Update any information you need, and then click the "Update" button to update the Customer.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_update_customer_list')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('update_customer_list')!);
         break;
       case 'Delete':
-        dialogTitle = 'How to delete the Customer?';
-        dialogContent = Text('You can tap the Customer list to see details of each customer, and a detailed page will show in the screen. '
-            'and then click the "Delete" button to delete the customer.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_delete_customer_list')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('delete_customer_list')!);
         break;
       default:
         dialogTitle = 'Unknown';
@@ -653,7 +658,7 @@ class CustomerPageState extends State<CustomerPage> {
           content: dialogContent,
           actions: <Widget>[
             TextButton(
-              child: Text('Got it!'),
+              child: Text(AppLocalizations.of(context)!.translate('Got_it')!),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
@@ -670,15 +675,30 @@ class CustomerPageState extends State<CustomerPage> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.green,
-          title: Text("Customer", style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold, ) ),
+
+          title: Text(AppLocalizations.of(context)!.translate('customer')!,
+              style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold, ) ),
           actions: [
+            TextButton(onPressed: () {
+              MyApp.setLocale(context, Locale("en","CA"));
+            },
+              child:Text("English",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.white54 )),
+            ),
+            TextButton(onPressed: () {
+              MyApp.setLocale(context, Locale("zh", "CH"));
+            },
+              child:Text("中文",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.white54 )),
+            ),
             TextButton(onPressed: () {
               setState(() {
                 addCustomer = "";
                 selectedCustomer = null;
               });
             },
-              child:Text("Clear the Selected Customer", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.green )),
+              child:Text(AppLocalizations.of(context)!.translate('Clear')!,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.white54 )),
             ),
 
             SizedBox(width: 20),
@@ -689,24 +709,25 @@ class CustomerPageState extends State<CustomerPage> {
                 showCustomDialog(context, value); // Example action: print the selected value
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
+                 PopupMenuItem<String>(
                   value: 'View',
-                  child: Text('How to view the Customer List?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_view_customer_list')!),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'Add',
-                  child: Text('How to add the new Customer?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_add_customer_list')!),
                 ),
-                const PopupMenuItem<String>(
+                 PopupMenuItem<String>(
                   value: 'Update',
-                  child: Text('How to update the Customer?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_update_customer_list')!),
                 ),
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'Delete',
-                  child: Text('How to delete the Customer?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_delete_customer_list')!),
                 ),
               ],
-              child: Text("Help", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+              child: Text(AppLocalizations.of(context)!.translate('Help')!,
+                  style: TextStyle(color: Colors.white54, fontWeight: FontWeight.bold,)),
             ),
 
             SizedBox(width: 20),
