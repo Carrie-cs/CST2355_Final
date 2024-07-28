@@ -1,9 +1,12 @@
-import 'package:cst2335final/reservation/ReservationPage.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'AppLocalizations.dart';
 import 'Airplane/AirplanePage.dart';
+import 'CustomerList/CustomerPage.dart';
+import 'flight/flight_list_page.dart';
+import 'reservation/ReservationPage.dart';
 
 
 
