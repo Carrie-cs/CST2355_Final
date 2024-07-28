@@ -1,0 +1,41 @@
+
+
+
+{
+  "Airplane": "Airplane",
+  "Airplane_List": "Current Airplane List",
+  "Add_Airplane": "Add Airplane",
+  "Add_New_Airplane": "Add New Airplane",
+  "Airplane_Type": "Airplane Type",
+  "Airplane_Number_Of_Passenger": "Airplane Number Of Passenger",
+  "Airplane_Max_Speed": "Airplane Max Speed",
+  "Airplane_Fly_Distance": "Airplane Fly Distance",
+  "Submit_New_Airplane": "Submit New Airplane",
+  "Details_of_Airplane": "Details of Airplane",
+  "Update_Airplane": "Update Airplane",
+  "Update": "Update",
+  "Want_update_airplane": "Do you want to update this airplane?",
+  "Airplane_updated": "The Airplane is Updated!",
+  "Delete": "Delete",
+  "Want_delete_airplane": "Do you want to delete this airplane?",
+  "Airplane_deleted": "The Airplane is Deleted!",
+  "Help": "Help",
+  "Clear": "Clear",
+  "Airplane_no_list": "There are no items in the list",
+  "Want_add_airplane": "Do you want to add this airplane?",
+  "New_Airplane_Added": "The New Airplane is Added!",
+  "No": "No",
+  "Yes": "Yes",
+  "Error": "Error",
+  "Got_it": "Got it!",
+  "Airplane_fields_required": "All fields are required. Please fill them to proceed.",
+  "How_view_Airplane": "How to view the Airplane List?",
+  "How_add_Airplane": "How to add the new Airplane?",
+  "How_update_Airplane": "How to update the Airplane?",
+  "How_delete_Airplane": "How to delete the Airplane?",
+  "How_view_Airplane_detail": "The Airplane List would show the whole screen on the Phone, but on a Tablet or Desktop screen, it would show the List on the left screen.",
+  "How_add_Airplane_detail": "You can click the button: 'Add Airplane' in the bottom, a add page will show in the screen, then you can add new Airplane with information of: airplane type, the number of passengers, the maximum speed, and the range or distance the plane can fly. And click the 'Submit the new Airplane Type' button to add it.",
+  "How_update_Airplane_detail": "You can tap the Airplane list (e.g.: Airplane Type 1: XXX) to see details of each item, and a detailed page will show in the screen. Update any information you need, and then click the 'Update' button to update the Airplane.",
+  "How_delete_Airplane_detail": "You can tap the Airplane list (e.g.: Airplane Type 1: XXX) to see details of each item, and a detailed page will show in the screen. and then click the 'Delete' button to delete the Airplane."
+}
+

@@ -1,3 +1,4 @@
+
 name: cst2335final
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
@@ -35,6 +36,10 @@ dependencies:
   floor: ^1.5.0
 
 
+  flutter_localizations:
+    sdk: flutter
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -49,7 +54,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   floor_generator: ^1.5.0
   build_runner: ^2.4.9
 
@@ -73,9 +78,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+
+    - assets/translations/en.json
+    - assets/translations/zh.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

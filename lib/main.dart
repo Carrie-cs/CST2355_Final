@@ -1,11 +1,8 @@
 import 'package:cst2335final/reservation/ReservationPage.dart';
 import 'package:flutter/material.dart';
 
-
-import 'CustomerList/CustomerPage.dart';
-
-
-import 'flight/flight_list_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'AppLocalizations.dart';
 import 'Airplane/AirplanePage.dart';
 
 
@@ -14,14 +11,53 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+
+  @override
+  _MyAppState createState() {
+    return _MyAppState();
+  }
+
+  static void setLocale(BuildContext context, Locale newLocale) async {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.changeLanguage(newLocale);
+  }
+
+}
+
+class _MyAppState extends State<MyApp>
+{
+
+  var _locale = Locale("en", "CA"); //default is english from Canada
+
+  void changeLanguage(Locale newLanguage)
+  {
+    setState(() {
+      _locale = newLanguage; //set app to new language, and redraw
+    });
+
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      supportedLocales:  const<Locale> [
+        Locale("en", "CA"),
+        Locale("zh", "CH"),//country doesn't matter in this case
+      ] ,
+
+      localizationsDelegates: const[
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      locale: _locale, //default is "en", "CA" from above
+
       title: 'Flutter Demo',
 
       //routers
@@ -32,6 +68,7 @@ class MyApp extends StatelessWidget {
         '/FlightPage': (context) { return const FlightPage();},
         '/CustomerPage': (context) { return  CustomerPage(); }, //Same as above =>
         '/ReservationPage': (context) { return  ReservationPage(); },
+
       },
 
       theme: ThemeData(
@@ -86,10 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
-              child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
-            ),
+
             ElevatedButton(
               onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
               child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
@@ -102,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: (){Navigator.pushNamed(context,"/ReservationPage" );},
               child:const Text("Reservation List", style: TextStyle(color: Colors.blue)),
             ),
+
           ],
         ),
       ),
