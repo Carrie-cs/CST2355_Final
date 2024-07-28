@@ -138,10 +138,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: (){Navigator.pushNamed(context,"/ReservationPage" );},
               child:const Text("Reservation List", style: TextStyle(color: Colors.blue)),
-            ),
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
-              child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
             )
 
           ],
