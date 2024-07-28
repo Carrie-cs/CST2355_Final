@@ -1,32 +1,51 @@
 
 
-// floor will generate the functions for us, so we mark this class as abstract
+
 
 import 'package:floor/floor.dart';
 import 'package:cst2335final/Airplane/AirplaneItem.dart';
 
-
-@dao // this is a DAO class
+/// This is AirplaneDAO class.
+///
+/// This class provides the Data Access Object (DAO) for the AirplaneItem entity.
+/// It contains methods to perform CRUD (Create, Read, Update, Delete) operations
+/// on the AirplaneItem table in the database.
+@dao
 abstract class AirplaneDAO {
 
-  //insert:
+
+  /// Inserts a new [AirplaneItem] into the database.
+  ///
+  /// [item] is the AirplaneItem to be inserted.
+  /// This method returns a [Future] that completes when the insertion is done.
   @insert
   Future<void> insertAirplane(AirplaneItem item);
 
-  //delete:
-  @delete // translated delete from AirplaneItem where (id = ...)
+  /// Deletes an existing [AirplaneItem] from the database.
+  ///
+  /// [item] is the AirplaneItem to be deleted.
+  /// This method returns a [Future] that completes with the number of rows affected.
+  @delete
   Future<int> deleteAirplane(AirplaneItem item);
 
-  //Query:
+  /// Retrieves all [AirplaneItem] records from the database.
+  ///
+  /// This method returns a [Future] that completes with a list of all AirplaneItem records.
   @Query('SELECT * FROM AirplaneItem')
   Future< List<AirplaneItem> > getAllItems();
 
-  //Query:
+  /// Retrieves [AirplaneItem] records with the specified ID from the database.
+  ///
+  /// [id] is the unique identifier of the AirplaneItem to be retrieved.
+  /// This method returns a [Future] that completes with a list of AirplaneItem records matching the ID.
   @Query('SELECT * FROM AirplaneItem where id = :id')
   Future< List<AirplaneItem> > getItems(int id);
 
-  // update:
-  @update // translated to update AirplaneItem where id = ...
+  /// Updates an existing [AirplaneItem] in the database.
+  ///
+  /// [item] is the AirplaneItem to be updated.
+  /// This method returns a [Future] that completes with the number of rows affected.
+  @update
   Future<int> updateAirplane(AirplaneItem item);
 
 
