@@ -1,10 +1,6 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/painting.dart';
-
 import '../AppLocalizations.dart';
-import '../main.dart';
 
 import 'flight.dart';
 import 'flight_dao.dart';
