@@ -1,7 +1,6 @@
 import 'package:floor/floor.dart';
 
 /// Represents a flight entity.
-///
 /// This class is used to define the structure of a flight record in the database.
 /// It contains information about the flight's ID, departure city, destination city,
 /// departure time, and arrival time.

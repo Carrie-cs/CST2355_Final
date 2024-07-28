@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'flight.dart';
 import 'flight_dao.dart';
 import 'flight_database.dart';
-
 /// This is the flights page of the application.
 /// This page lists all the flights and provides functionality to add, update, and delete flights.
 /// @author: Yao Yi

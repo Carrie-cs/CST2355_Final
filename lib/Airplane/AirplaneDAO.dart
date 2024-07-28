@@ -1,5 +1,4 @@
 
-
 // floor will generate the functions for us, so we mark this class as abstract
 
 import 'package:floor/floor.dart';

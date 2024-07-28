@@ -1,8 +1,6 @@
 import 'package:floor/floor.dart';
 
 import 'flight.dart';
-
-
 /// Data Access Object (DAO) for performing CRUD operations on [Flight] entities.
 ///
 /// This DAO provides methods to query, insert, update, and delete flights in the database.

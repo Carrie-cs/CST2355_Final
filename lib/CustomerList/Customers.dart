@@ -1,5 +1,4 @@
 import 'package:floor/floor.dart';
-
 /// Represents a customer entity for the database.
 @entity
 class Customers{

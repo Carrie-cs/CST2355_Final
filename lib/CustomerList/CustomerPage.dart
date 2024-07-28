@@ -6,7 +6,6 @@ import 'CustomerDAO.dart';
 import 'CustomersDatabase.dart';
 import 'Customers.dart';
 import 'CustomerRepository.dart';
-
 /// The CustomerPage displays a page where users can view, add, update and delete customer's information.
 class CustomerPage extends StatefulWidget { // stateful means has variables
   @override

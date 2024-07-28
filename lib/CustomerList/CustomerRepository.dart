@@ -1,3 +1,4 @@
+
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 ///A repository class for managing customer data using encrypted shared preferences.
 class CustomerRepository{

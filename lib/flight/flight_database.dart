@@ -4,7 +4,6 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'flight.dart';
 import 'flight_dao.dart';
-
 part 'flight_database.g.dart';
 
 /// The [FlightDatabase] class represents the Room database for managing [Flight] entities.

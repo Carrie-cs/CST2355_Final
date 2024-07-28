@@ -1,6 +1,5 @@
 import 'package:cst2335final/CustomerList/Customers.dart';
 import 'package:floor/floor.dart';
-
 @dao
 /// Data Access Object (DAO) for interacting with the Customers table in the database.
 abstract class CustomerDAO{

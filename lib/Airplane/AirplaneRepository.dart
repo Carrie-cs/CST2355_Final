@@ -1,6 +1,4 @@
 
-
-
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 
 class AirplaneRepository{
