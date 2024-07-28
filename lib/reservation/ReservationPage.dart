@@ -7,15 +7,16 @@ import 'package:cst2335final/flight/flight_dao.dart';
 import 'package:cst2335final/flight/flight_database.dart';
 import 'package:cst2335final/reservation/Resercvation.dart';
 import 'package:cst2335final/reservation/ReservationDao.dart';
-import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-
+import '../AppLocalizations.dart';
+import '../main.dart';
 import 'ReservationDatabase.dart';
 import 'ReservationRepository.dart';
 /// This is the reservation page of the application.
 /// This page lists all the reservation and provides functionality to add, view detail reservation.
+///
 /// @author: Hongxiu Guo
 /// Date: Jul 27, 2024
 
@@ -115,25 +116,26 @@ class ReservationPageState extends State<ReservationPage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children:<Widget>[
+              const SizedBox(height: 20),
               // list header
-            const Text("Reservation List", style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold, ),),
+              Text(AppLocalizations.of(context)!.translate('reservation_header_list')!, style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold, ),),
             Container(
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
-              child: const Row(
+              child: Row(
                 children: [
-                  Expanded(flex:1, child: Text('Row', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
-                  Expanded(flex:2, child: Text('Customer', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
-                  Expanded(flex:2, child: Text('Flight', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)))
+                  Expanded(flex:1, child: Text(AppLocalizations.of(context)!.translate('reservation_row')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
+                  Expanded(flex:2, child: Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
+                  Expanded(flex:2, child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)))
                 ],
               ),
             ),
             // if no data in list
             if(reservation_list.isEmpty)
-              const Expanded(child: Align(
+               Expanded(child: Align(
                 alignment: Alignment.center,
                 child: Padding(
                   padding: EdgeInsets.only(top: 20.0), // Add some padding at the top
-                  child: Text('There are no items in the list', style: TextStyle(fontSize: 18, color: Colors.black,),),
+                  child: Text(AppLocalizations.of(context)!.translate('reservation_no_data')!, style: TextStyle(fontSize: 18, color: Colors.black,),),
                 ),
                )
               )
@@ -155,7 +157,7 @@ class ReservationPageState extends State<ReservationPage> {
                                       // Text( getCustomerById(reservation_list[rowNumber].customerId) ==null? "Customer not Exist": , style: TextStyle(fontSize: 16, color: Colors.black54 ),),
 
                                       if(getCustomerById(reservation_list[rowNumber].customerId)==null)
-                                          Expanded(flex:2, child:Text( "Customer not Exist", style: TextStyle(fontSize: 16, color: Colors.black54 ),),)
+                                          Expanded(flex:2, child:Text( AppLocalizations.of(context)!.translate('reservation_no_customer')!, style: TextStyle(fontSize: 16, color: Colors.black54 ),),)
                                       else
                                           Expanded(flex:2, child:Text(getCustomerById(reservation_list[rowNumber].customerId).firstName + " "+ getCustomerById(reservation_list[rowNumber].customerId).lastName, style: TextStyle(fontSize: 16, color: Colors.black54 ),),),
 
@@ -192,7 +194,7 @@ class ReservationPageState extends State<ReservationPage> {
                         addItem = "yes";
                       });
                     },
-                    child: const Text("Add New Reservation", style: TextStyle(fontSize:18,color: Colors.black54)),),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_add')!, style: TextStyle(fontSize:18,color: Colors.black54)),),
               ),
           ],
        )
@@ -247,20 +249,20 @@ class ReservationPageState extends State<ReservationPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          const Text("Add New Reservation", style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold),),
-          const SizedBox(height: 20),
+          Text(AppLocalizations.of(context)!.translate('reservation_add')!, style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold),),
+          const SizedBox(height: 10),
 
           // select customer row
           Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
             child:Row(children: [
-              const SizedBox(
+               SizedBox(
                 width: 120,
-                child:  Text("Customer:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                child:  Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
               ),
             Expanded(
               child:  DropdownButton <int>(
                 style: const TextStyle(fontSize: 18, color: Colors.black54,),
-                hint: const Text(" select a customer"),
+                hint: Text(AppLocalizations.of(context)!.translate('reservation_select_customer')!),
                 iconSize: 50,
                 isExpanded: true,
                 value: customerSelected,
@@ -282,9 +284,9 @@ class ReservationPageState extends State<ReservationPage> {
           // Flight select row
           Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
             child:Row(children: [
-              const SizedBox(
+               SizedBox(
                 width: 120, // fix width
-                child: Text("Flight:", style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
               ),
 
             Expanded(
@@ -292,7 +294,7 @@ class ReservationPageState extends State<ReservationPage> {
                 style: const TextStyle(fontSize: 18, color: Colors.black54,),
                 iconSize: 40,
                 isExpanded: true,
-                hint: const Text(" select a flight"),
+                hint:  Text(AppLocalizations.of(context)!.translate('reservation_select_flight')!),
                 value: flightSelected,
                 items: flight_list.map((Flight flight) {
                   return DropdownMenuItem<String>(
@@ -312,9 +314,9 @@ class ReservationPageState extends State<ReservationPage> {
           // date select row
           Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
             child:Row(children: [
-              const SizedBox(
+               SizedBox(
                 width: 120, // fix width
-                child: Text("Date:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
               ),
 
               Expanded(
@@ -322,9 +324,9 @@ class ReservationPageState extends State<ReservationPage> {
                   style: TextStyle(fontSize:18, color: Colors.black54, ),
                   controller: _dateController,
                   decoration: InputDecoration(
-                    hintText:"Select a date",
+                    hintText: AppLocalizations.of(context)!.translate('reservation_select_date')!,
                     border: OutlineInputBorder(),
-                    labelText: "Departure Date",
+                    labelText: AppLocalizations.of(context)!.translate('reservation_departure_date')!,
                     suffixIcon:Icon(Icons.calendar_today),
                   ),
                   readOnly: true,
@@ -334,7 +336,7 @@ class ReservationPageState extends State<ReservationPage> {
             ],),
           ),
         // Submit and cancel button
-        Padding(padding: EdgeInsets.fromLTRB(0, 20, 10, 10),
+        Padding(padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -345,7 +347,7 @@ class ReservationPageState extends State<ReservationPage> {
                 if(customerSelected == null || flightSelected ==null ||  _dateController.text.isEmpty){
                   // show a snackbar if the input items are empty
                   var snackBar = SnackBar(
-                    content: Text('Information can not be empty!'),
+                    content: Text(AppLocalizations.of(context)!.translate('reservation_not_empty')!),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
@@ -355,19 +357,19 @@ class ReservationPageState extends State<ReservationPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Add new reservation'),
-                        content: Text('Are you sure to save this reservation info?'),
+                        title: Text(AppLocalizations.of(context)!.translate('reservation_add')!),
+                        content: Text(AppLocalizations.of(context)!.translate('reservation_add_alert')!),
                         actions: <Widget>[
                           //No button in alert dialog
                           ElevatedButton(
-                            child: Text('No'),
+                            child: Text(AppLocalizations.of(context)!.translate('No')!),
                             onPressed: () {
                               Navigator.of(context).pop(); // Close the dialog
                             },
                           ),
                           // Yes button in alert dialog, add reservation
                           FilledButton(
-                              child: Text('Yes'),
+                              child: Text(AppLocalizations.of(context)!.translate('Yes')!),
                               onPressed: (){
                                 // add action
                                 setState(() {
@@ -390,8 +392,8 @@ class ReservationPageState extends State<ReservationPage> {
                   );
                 }
               },
-              child: Text("Submit", style: TextStyle(color: Colors.black54,)),
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),
+              child: Text(AppLocalizations.of(context)!.translate('submit')!, style: TextStyle(color: Colors.black54,)),
             ),
 
             // Cancel button, return list page
@@ -406,8 +408,8 @@ class ReservationPageState extends State<ReservationPage> {
                   ReservationRepository.clearData();
                 });
               },
-              child: Text("Cancel", style: TextStyle(color: Colors.black54,)),
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),
+              child: Text(AppLocalizations.of(context)!.translate('cancel')!, style: TextStyle(color: Colors.black54,)),
             ),
         ])
         ),
@@ -416,36 +418,31 @@ class ReservationPageState extends State<ReservationPage> {
 
   /// This function to show the detail page of a reservation
   Widget DetailPage() {
-    if(selectedItem == null){
-      return Column(
-        children: [Text("Nothing is selected")],
-      );
-    }else{
       return
         Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              const Text("Reservation Information", style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold ),),
-              const SizedBox(height: 20),
+              Text(AppLocalizations.of(context)!.translate('reservation_detail')!, style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold ),),
+              const SizedBox(height: 10),
 
               // customer row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120,
-                    child:  Text("Customer:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child:  Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
                   ),
-                  Text(getCustomerById(selectedItem!.customerId).firstName + getCustomerById(selectedItem!.customerId).lastName, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(getCustomerById(selectedItem!.customerId).firstName +" "+ getCustomerById(selectedItem!.customerId).lastName, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
               ),
 
               // Flight row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120, // fix width
-                    child: Text("Flight:", style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                   ),
                   Text(selectedItem!.flightId,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
@@ -455,9 +452,9 @@ class ReservationPageState extends State<ReservationPage> {
               // Departure City row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120, // fix width
-                    child: Text("Departure City:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_city')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
                   ),
                   Text(getFlightById(selectedItem!.flightId).departureCity,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
@@ -466,9 +463,9 @@ class ReservationPageState extends State<ReservationPage> {
               // Destination City row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120, // fix width
-                    child: Text("Destination City:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_destination_city')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
                   ),
                   Text(getFlightById(selectedItem!.flightId).destinationCity,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
@@ -476,9 +473,9 @@ class ReservationPageState extends State<ReservationPage> {
               // Departure date row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120, // fix width
-                    child: Text("Departure Date:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
                   ),
                   Text(selectedItem!.departureTime,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
@@ -486,9 +483,9 @@ class ReservationPageState extends State<ReservationPage> {
               // Departure time row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120, // fix width
-                    child: Text("Departure Time:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_time')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
                   ),
                   Text(getFlightById(selectedItem!.flightId).departureTime,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
@@ -496,15 +493,15 @@ class ReservationPageState extends State<ReservationPage> {
               // Arrival time row
               Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child:Row(children: [
-                  const SizedBox(
+                   SizedBox(
                     width: 120, // fix width
-                    child: Text("Arrival Time:", style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_arrival_time')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
                   ),
                   Text(getFlightById(selectedItem!.flightId).arrivalTime,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
                 ],),
               ),
               //
-              Padding(padding: EdgeInsets.fromLTRB(0, 20, 10, 10),
+              Padding(padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -515,13 +512,13 @@ class ReservationPageState extends State<ReservationPage> {
                               selectedItem = null;
                             });
                           },
-                          child: Text("Go Back", style: TextStyle(color: Colors.black54,)),
                           style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),
+                          child: Text(AppLocalizations.of(context)!.translate('reservation_go_back')!, style: TextStyle(color: Colors.black54,)),
                         ),
                       ])
               ),
             ]);
-    }
+
   }
 
   ///This method to display different layouts depending on the screen size
@@ -532,11 +529,11 @@ class ReservationPageState extends State<ReservationPage> {
     //landscape model
     if ((width>height) && (width > 720))
     {
-      //This is for default page
+      //This is for default list page
       if (selectedItem == null && addItem == "") {
         return Row( children:[
             Expanded( flex: 1, child: ListPage()),
-            Expanded( flex: 1, child: Text(" "), ),
+            Expanded( flex: 1, child: Center(child: Text(AppLocalizations.of(context)!.translate('reservation_hint')!),) ),
           ]);
       }
       //This is for add page
@@ -547,7 +544,7 @@ class ReservationPageState extends State<ReservationPage> {
         ]);
       }
       //This is for detail page
-      else if (selectedItem != null && addItem == "") {
+      else if (selectedItem != null) {
         return Row( children:[
           Expanded( flex: 1, child: ListPage(),),
           Expanded( flex: 1, child: DetailPage(),),]);
@@ -578,21 +575,16 @@ class ReservationPageState extends State<ReservationPage> {
 
     switch (value) {
       case 'View':
-        dialogTitle = 'How to view the Reservation List?';
-        dialogContent = Text('The Reservation List would show the whole screen on the Phone, but on a Tablet or Desktop screen, '
-            'it would show the List on the left screen.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_view_reservation_list_')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('how_view_reservation_list')!);
         break;
       case 'Add':
-        dialogTitle = 'How to add a new Reservation?';
-        dialogContent = Text('You can click the button: "Add New Reservation" in the bottom, a add page will show in the screen, '
-            'you can add new Reservation with information of: customer name, flight, and departure date, '
-            'Then click the "Submit" button to add it.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_add_reservation_')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('how_add_reservation')!);
         break;
       case 'Detail':
-        dialogTitle = 'How to view a Reservation detail?';
-        dialogContent = Text('You can tap one of reservation from the reservation list: a reservation page will show in the screen, '
-            'but on a Tablet or Desktop screen, it would show the List on the left screen.'
-            'You can click the "Go back" button to return to list page.');
+        dialogTitle = AppLocalizations.of(context)!.translate('how_view_reservation_detail_')!;
+        dialogContent = Text(AppLocalizations.of(context)!.translate('how_view_reservation_detail')!);
         break;
       default:
         dialogTitle = 'Unknown';
@@ -607,7 +599,7 @@ class ReservationPageState extends State<ReservationPage> {
           content: dialogContent,
           actions: <Widget>[
             TextButton(
-              child: Text('Got it!'),
+              child: Text(AppLocalizations.of(context)!.translate('Got_it')!),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
@@ -624,23 +616,13 @@ class ReservationPageState extends State<ReservationPage> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-          title: Text("Reservation", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ) ),
+          title: Text(AppLocalizations.of(context)!.translate('reservation')!, style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ) ),
           actions: [
-            TextButton(
-              onPressed: (){
-                setState(() {
-                  if(selectedItem != null){
-                    selectedItem = null;
-                  }else if (!addItem.isEmpty){
-                    addItem = "";
-                  }else{
-                    Navigator.pop(context);
-                  }
+            // Button to switch to English
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("English", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ))),
+            // Button to switch to Chinese
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ))),
 
-                });
-              },
-              child: Text("Go Back", style: TextStyle(color: Colors.black54,fontWeight: FontWeight.bold),)
-            ),
             SizedBox(width: 20),
             PopupMenuButton<String>(
               onSelected: (String value) {
@@ -648,24 +630,23 @@ class ReservationPageState extends State<ReservationPage> {
                 showCustomDialog(context, value); // Example action: print the selected value
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
+                 PopupMenuItem<String>(
                   value: 'View',
-                  child: Text('How to view the Reservation List?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_view_reservation_list_')!),
                 ),
-                const PopupMenuItem<String>(
+                 PopupMenuItem<String>(
                   value: 'Add',
-                  child: Text('How to add a new Reservation?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_add_reservation_')!),
                 ),
-                const PopupMenuItem<String>(
+                 PopupMenuItem<String>(
                   value: 'Detail',
-                  child: Text('How to view a Reservation detail?'),
+                  child: Text(AppLocalizations.of(context)!.translate('how_view_reservation_detail_')!),
                 ),
               ],
-              child: Text("Help", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
+              child: Text(AppLocalizations.of(context)!.translate('Help')!, style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
             ),
 
             SizedBox(width: 20),
-
           ]
       ),
       body: Center(

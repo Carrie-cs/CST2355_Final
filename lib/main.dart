@@ -9,11 +9,11 @@ import 'flight/flight_list_page.dart';
 import 'reservation/ReservationPage.dart';
 
 
-
+/// The main entry point of the application.
 void main() {
   runApp(const MyApp());
 }
-
+/// The root widget of the application.
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -22,19 +22,25 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() {
     return _MyAppState();
   }
-
+  /// Changes the locale of the app.
+  ///
+  /// Takes in a [BuildContext] and a [Locale] object. Finds the ancestor state
+  /// of type [_MyAppState] and calls the [changeLanguage] method.
   static void setLocale(BuildContext context, Locale newLocale) async {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state?.changeLanguage(newLocale);
   }
 
 }
-
+/// The state for the [MyApp] widget.
 class _MyAppState extends State<MyApp>
 {
-
+  /// The current locale of the app. Default is English (Canada).
   var _locale = Locale("en", "CA"); //default is english from Canada
 
+  /// Changes the language of the app.
+  ///
+  /// Takes in a [Locale] object and sets the state to the new language.
   void changeLanguage(Locale newLanguage)
   {
     setState(() {
@@ -43,7 +49,9 @@ class _MyAppState extends State<MyApp>
 
   }
 
-  // This widget is the root of your application.
+  /// Builds the widget tree.
+  ///
+  /// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,19 +91,11 @@ class _MyAppState extends State<MyApp>
     );
   }
 }
-
+/// The home page of the application.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
+  /// The title of the home page.
   final String title;
 
   @override
@@ -114,19 +114,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
+
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+
         title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
+            ElevatedButton(
+              onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
+              child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
+            ),
             ElevatedButton(
               onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
               child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
