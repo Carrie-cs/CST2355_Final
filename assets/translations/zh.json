@@ -137,7 +137,7 @@
   "flight_delete": "删除航班",
   "flight_view_message": "从列表中选择一个航班查看详情",
   "flight_arrow_button_tip": "返回首页",
-  "flight_back_button": "返回列表",
+  "flight_back_button": "列表",
   "flight_help_button": "帮助",
   "flight_help_title": "操作步骤",
   "flight_help_confirm": "明白了",
@@ -149,7 +149,17 @@
   "flight_how_update": "前往您想更新的航班详情页。填写信息并点击“更新航班”，然后点击“是”确认更新，或点击“否”取消。",
   "flight_how_delete_title": "如何删除航班？",
   "flight_how_delete": "前往您想删除的航班详情页。点击“删除航班”，然后点击“是”确认删除，或点击“否”取消。",
-  "flight_page_title": "航班"
+  "flight_page_title": "航班",
 
+  "appbar_title": "鹰鹰航空",
+  "homepage_title": "欢迎来到鹰鹰航空!",
+  "homepage_para1": "我们邀请您一起来探索中土大陆的奥妙！",
+  "homepage_para2": "我们将以最优质的服务带您前往中土大陆的任何地方！",
+  "homepage_para3": "快来体验终生难忘的航行之旅吧！",
+  "homepage_para4": "点击以下选项开始探索",
+  "homepage_button_customer": "用户",
+  "homepage_button_airline": "机型",
+  "homepage_button_flight": "航班",
+  "homepage_button_reservation": "预订"
 }
 

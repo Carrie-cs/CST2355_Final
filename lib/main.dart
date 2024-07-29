@@ -114,35 +114,211 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/CustomerPage" );},
-              child:const Text("Customer List", style: TextStyle(color: Colors.blue)),
-            ),
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/AirplanePage" );},
-              child:const Text("Airplane List", style: TextStyle(color: Colors.blue)),
-            ),
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/FlightPage" );},
-              child:const Text("Flight List", style: TextStyle(color: Colors.blue)),
-            ),
-            ElevatedButton(
-              onPressed: (){Navigator.pushNamed(context,"/ReservationPage" );},
-              child:const Text("Reservation List", style: TextStyle(color: Colors.blue)),
-            )
-
-          ],
+        backgroundColor: Colors.black87,
+        title: Text(AppLocalizations.of(context)!.translate('appbar_title')!,
+          style: const TextStyle(fontSize:26,color: Colors.white, fontWeight: FontWeight.bold),
         ),
+          actions: [
+          // Button to switch to English
+          TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("EN", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
+          // Button to switch to Chinese
+          TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
+          ]
       ),
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.asset(
+              'assets/images/background.png',
+              fit: BoxFit.cover,
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 120),
+                      child: Column(
+                        children: [
+                          Text(AppLocalizations.of(context)!.translate('homepage_title')!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Courier New',
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 25.0,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(AppLocalizations.of(context)!.translate('homepage_para1')!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 20.0,
+                                  color: Colors.black.withOpacity(1),
+                                  offset: const Offset(4, 4),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(AppLocalizations.of(context)!.translate('homepage_para2')!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 20.0,
+                                  color: Colors.black.withOpacity(1),
+                                  offset: const Offset(4, 4),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(AppLocalizations.of(context)!.translate('homepage_para3')!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 20.0,
+                                  color: Colors.black.withOpacity(1),
+                                  offset: const Offset(4, 4),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text(AppLocalizations.of(context)!.translate('homepage_para4')!,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 20.0,
+                              color: Colors.black.withOpacity(1),
+                              offset: const Offset(4, 4),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 160,
+                          height: 50,
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.black87,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/CustomerPage");
+                            },
+                            child: Text(AppLocalizations.of(context)!.translate('homepage_button_customer')!,
+                              style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 24),
+                        SizedBox(
+                          width: 160,
+                          height: 50,
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.black87,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/AirplanePage");
+                            },
+                            child: Text(AppLocalizations.of(context)!.translate('homepage_button_airline')!,
+                              style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 160,
+                          height: 50,
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.black87,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/FlightPage");
+                            },
+                            child: Text(AppLocalizations.of(context)!.translate('homepage_button_flight')!,
+                              style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 24),
+                        SizedBox(
+                          width: 160,
+                          height: 50,
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.black87,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/ReservationPage");
+                            },
+                            child: Text(AppLocalizations.of(context)!.translate('homepage_button_reservation')!,
+                              style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        )
     );
   }
 }

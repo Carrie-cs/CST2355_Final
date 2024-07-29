@@ -710,7 +710,7 @@ class FlightPageState extends State<FlightPage> {
           ),
           actions: [
             // Button to switch to English
-            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("English", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("EN", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
             // Button to switch to Chinese
             TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
             // Button to back to flight list

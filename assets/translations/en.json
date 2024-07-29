@@ -139,7 +139,7 @@
   "flight_delete": "Delete Flight",
   "flight_view_message": "Select a flight from the list to view the details",
   "flight_arrow_button_tip": "Back to homepage",
-  "flight_back_button": "Back to List",
+  "flight_back_button": "List",
   "flight_help_button": "Help",
   "flight_help_title": "Instruction",
   "flight_help_confirm": "Got it",
@@ -151,7 +151,17 @@
   "flight_how_update": "Go to the details page of the flight you want to update. Fill in the information and click \"Update Flight\", then click \"Yes\" to confirm the update, or \"No\" to cancel.",
   "flight_how_delete_title": "How to delete a flight?",
   "flight_how_delete": "Go to the details page of the flight you want to delete. Click \"Delete Flight\", then click \"Yes\" to confirm the deletion, or \"No\" to cancel.",
-  "flight_page_title": "Flights"
+  "flight_page_title": "Flights",
 
+  "appbar_title": "Eagle Airlines",
+  "homepage_title": "Welcome to Eagle Airlines!",
+  "homepage_para1": "We invite you to explore the wonders of Middle-earth!",
+  "homepage_para2": "We will take you anywhere in Middle-earth with the utmost care!",
+  "homepage_para3": "Come and experience a once-in-a-lifetime unforgettable flight!",
+  "homepage_para4": "Choose an option below to explore",
+  "homepage_button_customer": "Customer",
+  "homepage_button_airline": "Airplane",
+  "homepage_button_flight":"Flight",
+  "homepage_button_reservation":"Reservation"
 }
 
