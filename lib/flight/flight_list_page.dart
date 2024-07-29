@@ -2,6 +2,7 @@ import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import '../AppLocalizations.dart';
 
+import '../main.dart';
 import 'flight.dart';
 import 'flight_dao.dart';
 import 'flight_database.dart';
@@ -708,6 +709,11 @@ class FlightPageState extends State<FlightPage> {
             },
           ),
           actions: [
+            // Button to switch to English
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("English", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
+            // Button to switch to Chinese
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, ))),
+            // Button to back to flight list
             Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child:
