@@ -118,7 +118,7 @@ class ReservationPageState extends State<ReservationPage> {
             children:<Widget>[
               const SizedBox(height: 20),
               // list header
-              Text(AppLocalizations.of(context)!.translate('reservation_header_list')!, style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold, ),),
+              Text(AppLocalizations.of(context)!.translate('reservation_header_list')!, style: TextStyle(fontSize: 24, color: Colors.black87, fontWeight: FontWeight.bold, ),),
             Container(
               padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
               child: Row(
@@ -153,15 +153,15 @@ class ReservationPageState extends State<ReservationPage> {
                               child:
                                  Row(
                                     children: [
-                                     Expanded(flex:1, child:Text("${rowNumber + 1}", style: TextStyle(fontSize: 16, color: Colors.black54 ),),),
-                                      // Text( getCustomerById(reservation_list[rowNumber].customerId) ==null? "Customer not Exist": , style: TextStyle(fontSize: 16, color: Colors.black54 ),),
+                                     Expanded(flex:1, child:Text("${rowNumber + 1}", style: TextStyle(fontSize: 16, color: Colors.black87 ),),),
+                                      // Text( getCustomerById(reservation_list[rowNumber].customerId) ==null? "Customer not Exist": , style: TextStyle(fontSize: 16, color: Colors.black87 ),),
 
                                       if(getCustomerById(reservation_list[rowNumber].customerId)==null)
-                                          Expanded(flex:2, child:Text( AppLocalizations.of(context)!.translate('reservation_no_customer')!, style: TextStyle(fontSize: 16, color: Colors.black54 ),),)
+                                          Expanded(flex:2, child:Text( AppLocalizations.of(context)!.translate('reservation_no_customer')!, style: TextStyle(fontSize: 16, color: Colors.black87 ),),)
                                       else
-                                          Expanded(flex:2, child:Text(getCustomerById(reservation_list[rowNumber].customerId).firstName + " "+ getCustomerById(reservation_list[rowNumber].customerId).lastName, style: TextStyle(fontSize: 16, color: Colors.black54 ),),),
+                                          Expanded(flex:2, child:Text(getCustomerById(reservation_list[rowNumber].customerId).firstName + " "+ getCustomerById(reservation_list[rowNumber].customerId).lastName, style: TextStyle(fontSize: 16, color: Colors.black87 ),),),
 
-                                    Expanded(flex:2, child:Text( reservation_list[rowNumber].flightId, style: TextStyle(fontSize: 16, color: Colors.black54 ),),)
+                                    Expanded(flex:2, child:Text( reservation_list[rowNumber].flightId, style: TextStyle(fontSize: 16, color: Colors.black87 ),),)
 
                               ] ),
                             ),
@@ -194,7 +194,7 @@ class ReservationPageState extends State<ReservationPage> {
                         addItem = "yes";
                       });
                     },
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_add')!, style: TextStyle(fontSize:18,color: Colors.black54)),),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_add')!, style: TextStyle(fontSize:18,color: Colors.black87)),),
               ),
           ],
        )
@@ -249,7 +249,7 @@ class ReservationPageState extends State<ReservationPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
-          Text(AppLocalizations.of(context)!.translate('reservation_add')!, style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold),),
+          Text(AppLocalizations.of(context)!.translate('reservation_add')!, style: TextStyle(fontSize: 24, color: Colors.black87, fontWeight: FontWeight.bold),),
           const SizedBox(height: 10),
 
           // select customer row
@@ -257,11 +257,11 @@ class ReservationPageState extends State<ReservationPage> {
             child:Row(children: [
                SizedBox(
                 width: 120,
-                child:  Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                child:  Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
               ),
             Expanded(
               child:  DropdownButton <int>(
-                style: const TextStyle(fontSize: 18, color: Colors.black54,),
+                style: const TextStyle(fontSize: 18, color: Colors.black87,),
                 hint: Text(AppLocalizations.of(context)!.translate('reservation_select_customer')!),
                 iconSize: 50,
                 isExpanded: true,
@@ -286,12 +286,12 @@ class ReservationPageState extends State<ReservationPage> {
             child:Row(children: [
                SizedBox(
                 width: 120, // fix width
-                child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontSize: 18, color: Colors.black87, ),),
               ),
 
             Expanded(
               child: DropdownButton <String>(
-                style: const TextStyle(fontSize: 18, color: Colors.black54,),
+                style: const TextStyle(fontSize: 18, color: Colors.black87,),
                 iconSize: 40,
                 isExpanded: true,
                 hint:  Text(AppLocalizations.of(context)!.translate('reservation_select_flight')!),
@@ -316,12 +316,12 @@ class ReservationPageState extends State<ReservationPage> {
             child:Row(children: [
                SizedBox(
                 width: 120, // fix width
-                child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
               ),
 
               Expanded(
                 child: TextField(
-                  style: TextStyle(fontSize:18, color: Colors.black54, ),
+                  style: TextStyle(fontSize:18, color: Colors.black87, ),
                   controller: _dateController,
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context)!.translate('reservation_select_date')!,
@@ -393,7 +393,7 @@ class ReservationPageState extends State<ReservationPage> {
                 }
               },
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),
-              child: Text(AppLocalizations.of(context)!.translate('submit')!, style: TextStyle(color: Colors.black54,)),
+              child: Text(AppLocalizations.of(context)!.translate('submit')!, style: TextStyle(color: Colors.black87,)),
             ),
 
             // Cancel button, return list page
@@ -409,7 +409,7 @@ class ReservationPageState extends State<ReservationPage> {
                 });
               },
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),
-              child: Text(AppLocalizations.of(context)!.translate('cancel')!, style: TextStyle(color: Colors.black54,)),
+              child: Text(AppLocalizations.of(context)!.translate('cancel')!, style: TextStyle(color: Colors.black87,)),
             ),
         ])
         ),
@@ -423,7 +423,7 @@ class ReservationPageState extends State<ReservationPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Text(AppLocalizations.of(context)!.translate('reservation_detail')!, style: TextStyle(fontSize: 24, color: Colors.black54, fontWeight: FontWeight.bold ),),
+              Text(AppLocalizations.of(context)!.translate('reservation_detail')!, style: TextStyle(fontSize: 24, color: Colors.black87, fontWeight: FontWeight.bold ),),
               const SizedBox(height: 10),
 
               // customer row
@@ -431,9 +431,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120,
-                    child:  Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child:  Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
                   ),
-                  Text(getCustomerById(selectedItem!.customerId).firstName +" "+ getCustomerById(selectedItem!.customerId).lastName, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(getCustomerById(selectedItem!.customerId).firstName +" "+ getCustomerById(selectedItem!.customerId).lastName, style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
 
@@ -442,9 +442,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120, // fix width
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                   ),
-                  Text(selectedItem!.flightId,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(selectedItem!.flightId,style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
 
@@ -454,9 +454,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120, // fix width
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_city')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_city')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
                   ),
-                  Text(getFlightById(selectedItem!.flightId).departureCity,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(getFlightById(selectedItem!.flightId).departureCity,style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
 
@@ -465,9 +465,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120, // fix width
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_destination_city')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_destination_city')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
                   ),
-                  Text(getFlightById(selectedItem!.flightId).destinationCity,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(getFlightById(selectedItem!.flightId).destinationCity,style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
               // Departure date row
@@ -475,9 +475,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120, // fix width
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
                   ),
-                  Text(selectedItem!.departureTime,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(selectedItem!.departureTime,style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
               // Departure time row
@@ -485,9 +485,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120, // fix width
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_time')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_departure_time')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
                   ),
-                  Text(getFlightById(selectedItem!.flightId).departureTime,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(getFlightById(selectedItem!.flightId).departureTime,style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
               // Arrival time row
@@ -495,9 +495,9 @@ class ReservationPageState extends State<ReservationPage> {
                 child:Row(children: [
                    SizedBox(
                     width: 120, // fix width
-                    child: Text(AppLocalizations.of(context)!.translate('reservation_arrival_time')!, style: TextStyle(fontSize: 18, color: Colors.black54, )),
+                    child: Text(AppLocalizations.of(context)!.translate('reservation_arrival_time')!, style: TextStyle(fontSize: 18, color: Colors.black87, )),
                   ),
-                  Text(getFlightById(selectedItem!.flightId).arrivalTime,style: TextStyle(fontSize: 18, color: Colors.black54, ),),
+                  Text(getFlightById(selectedItem!.flightId).arrivalTime,style: TextStyle(fontSize: 18, color: Colors.black87, ),),
                 ],),
               ),
               //
@@ -513,7 +513,7 @@ class ReservationPageState extends State<ReservationPage> {
                             });
                           },
                           style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),
-                          child: Text(AppLocalizations.of(context)!.translate('reservation_go_back')!, style: TextStyle(color: Colors.black54,)),
+                          child: Text(AppLocalizations.of(context)!.translate('reservation_go_back')!, style: TextStyle(color: Colors.black87,)),
                         ),
                       ])
               ),
@@ -616,12 +616,12 @@ class ReservationPageState extends State<ReservationPage> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-          title: Text(AppLocalizations.of(context)!.translate('reservation')!, style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ) ),
+          title: Text(AppLocalizations.of(context)!.translate('reservation')!, style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, ) ),
           actions: [
             // Button to switch to English
-            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("English", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ))),
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("en", "CA") ); }, child:Text("English", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, ))),
             // Button to switch to Chinese
-            TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文", style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, ))),
+            TextButton(onPressed: () {MyApp.setLocale(context, Locale("zh", "CH") );  }, child:Text("中文", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, ))),
 
             SizedBox(width: 20),
             PopupMenuButton<String>(
@@ -643,16 +643,25 @@ class ReservationPageState extends State<ReservationPage> {
                   child: Text(AppLocalizations.of(context)!.translate('how_view_reservation_detail_')!),
                 ),
               ],
-              child: Text(AppLocalizations.of(context)!.translate('Help')!, style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
+              child: Text(AppLocalizations.of(context)!.translate('Help')!, style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
             ),
 
             SizedBox(width: 20),
           ]
       ),
-      body: Center(
-          child: ResponsiveLayout()
-      ),
-
+      body: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+            Opacity(
+            opacity: 0.2,
+            child: Image.asset(
+              'assets/images/background.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          ResponsiveLayout()
+        ]
+      )
     );
 
   }
