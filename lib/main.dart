@@ -128,9 +128,12 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Image.asset(
-              'assets/images/background.png',
-              fit: BoxFit.cover,
+            Opacity(
+              opacity: 0.8,
+              child: Image.asset(
+                'assets/images/background.png',
+                fit: BoxFit.cover,
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,

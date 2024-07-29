@@ -779,7 +779,19 @@ class FlightPageState extends State<FlightPage> {
             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        body: responsiveLayout()
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Opacity(
+              opacity: 0.2,
+              child: Image.asset(
+                'assets/images/background.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+            responsiveLayout()
+          ]
+        )
     );
   }
 

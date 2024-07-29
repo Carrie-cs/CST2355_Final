@@ -706,9 +706,19 @@ class AirplanePageState extends State<AirplanePage> {
             SizedBox(width: 20),
           ]
       ),
-      body: Center(
-          child: ResponsiveLayout()
-      ),
+        body: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Opacity(
+                opacity: 0.2,
+                child: Image.asset(
+                  'assets/images/background.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              ResponsiveLayout()
+            ]
+        )
     );
   }
 }
