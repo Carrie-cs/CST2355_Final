@@ -352,44 +352,69 @@ class ReservationPageState extends State<ReservationPage> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                 }else{  // if not empty, show showDialog
-                  //show AlertDialog
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(AppLocalizations.of(context)!.translate('reservation_add')!),
-                        content: Text(AppLocalizations.of(context)!.translate('reservation_add_alert')!),
-                        actions: <Widget>[
-                          //No button in alert dialog
-                          ElevatedButton(
-                            child: Text(AppLocalizations.of(context)!.translate('No')!),
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                          ),
-                          // Yes button in alert dialog, add reservation
-                          FilledButton(
-                              child: Text(AppLocalizations.of(context)!.translate('Yes')!),
-                              onPressed: (){
-                                // add action
-                                setState(() {
-                                  var reservation = new Reservation(Reservation.ID++, customerSelected!, flightSelected!, _dateController.text);
-                                  //add to database
-                                  _reservationDao.insertReservation(reservation);
-                                  reservation_list.add(reservation);
-
-                                  _dateController.text = "";
-                                  customerSelected = null;
-                                  flightSelected = null;
-                                  addItem = "";
-                                });
-                                Navigator.pop(context);
-                              }
-                          ),
-                        ],
+                  // check if the reservation already exist
+                  bool exists = reservation_list.any((reservation) =>
+                      reservation.customerId == customerSelected &&
+                      reservation.flightId == flightSelected &&
+                      reservation.departureTime == _dateController.text );
+                  // if the reservation does exist
+                  if( exists){
+                      var snackBar = SnackBar(
+                      content: Text(AppLocalizations.of(context)!.translate('reservation_exist')!),
                       );
-                    },
-                  );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }else {
+                    //show AlertDialog
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(AppLocalizations.of(context)!.translate(
+                                'reservation_add')!),
+                            content: Text(
+                                AppLocalizations.of(context)!.translate(
+                                    'reservation_add_alert')!),
+                            actions: <Widget>[
+                              //No button in alert dialog
+                              ElevatedButton(
+                                child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                        'No')!),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                              ),
+                              // Yes button in alert dialog, add reservation
+                              FilledButton(
+                                  child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                          'Yes')!),
+                                  onPressed: () {
+                                    // add action
+                                    setState(() {
+                                      var reservation = new Reservation(
+                                          Reservation.ID++, customerSelected!,
+                                          flightSelected!,
+                                          _dateController.text);
+                                      //add to database
+                                      _reservationDao.insertReservation(
+                                          reservation);
+                                      reservation_list.add(reservation);
+
+                                      _dateController.text = "";
+                                      customerSelected = null;
+                                      flightSelected = null;
+                                      addItem = "";
+                                    });
+                                    Navigator.pop(context);
+                                  }
+                              ),
+                            ],
+                          );
+                        }
+                    );
+                  }
                 }
               },
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.pink[50])),

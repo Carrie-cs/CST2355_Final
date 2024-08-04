@@ -65,6 +65,7 @@
   "how_view_reservation_list_": "怎么查看预约列表？",
   "how_add_reservation_": "怎么添加新的预约？",
   "how_view_reservation_detail_": "怎么查看预约详情？",
+  "reservation_exist": "预订已存在！请选择其他日期。",
 
   "prompt_user_choice": "您想从空白页开始还是复制前一位客户的字段？",
   "copy_fields": "复制字段",

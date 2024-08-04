@@ -67,6 +67,7 @@
   "how_view_reservation_list_": "How to view the Reservation List?",
   "how_add_reservation_": "How to add a new Reservation?",
   "how_view_reservation_detail_": "How to view a Reservation detail?",
+  "reservation_exist": "The Reservation already exists! Please choose another date.",
 
   "prompt_user_choice": "Do you want to start with a blank page or copy the fields from the previous customer?",
   "copy_fields": "Copy the fields",
