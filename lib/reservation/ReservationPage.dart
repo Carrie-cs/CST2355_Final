@@ -125,7 +125,8 @@ class ReservationPageState extends State<ReservationPage> {
                 children: [
                   Expanded(flex:1, child: Text(AppLocalizations.of(context)!.translate('reservation_row')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
                   Expanded(flex:2, child: Text(AppLocalizations.of(context)!.translate('reservation_customer')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
-                  Expanded(flex:2, child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)))
+                  Expanded(flex:2, child: Text(AppLocalizations.of(context)!.translate('reservation_flight')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black))),
+                  Expanded(flex:2, child: Text(AppLocalizations.of(context)!.translate('reservation_departure_date')!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black)))
                 ],
               ),
             ),
@@ -161,7 +162,8 @@ class ReservationPageState extends State<ReservationPage> {
                                       else
                                           Expanded(flex:2, child:Text(getCustomerById(reservation_list[rowNumber].customerId).firstName + " "+ getCustomerById(reservation_list[rowNumber].customerId).lastName, style: TextStyle(fontSize: 16, color: Colors.black87 ),),),
 
-                                    Expanded(flex:2, child:Text( reservation_list[rowNumber].flightId, style: TextStyle(fontSize: 16, color: Colors.black87 ),),)
+                                    Expanded(flex:2, child:Text( reservation_list[rowNumber].flightId, style: TextStyle(fontSize: 16, color: Colors.black87 ),),),
+                                    Expanded(flex:2, child:Text( reservation_list[rowNumber].departureTime, style: TextStyle(fontSize: 16, color: Colors.black87 ),),)
 
                               ] ),
                             ),
